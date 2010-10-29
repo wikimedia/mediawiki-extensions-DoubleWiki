@@ -252,7 +252,6 @@ class DoubleWiki {
 		 * The first and last slices are compensated.
 		 */
 		$stack = array();
-		$counter = 0;
 		for( $i=0 ; $i < $n ; $i++) {
 			$bits = preg_split( $this->tags, $left_slices[$i] );
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER);
