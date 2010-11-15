@@ -58,7 +58,7 @@ class DoubleWiki {
 		if ( $match_request === '' ) { 
 			return true;
 		}
-		$this->addMatchingTags ( &$text, $match_request );
+		$this->addMatchingTags ( $text, $match_request );
 
 		foreach( $parserOutput->mLanguageLinks as $l ) {
 			$nt = Title::newFromText( $l );
