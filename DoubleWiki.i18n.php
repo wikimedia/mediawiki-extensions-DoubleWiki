@@ -376,7 +376,7 @@ $messages['lv'] = array(
  * @author Jagwar
  */
 $messages['mg'] = array(
-	'doublewiki-desc' => "Maneho pejy sy ny dikan-teniny avy amina wiki hafa amin'ny alàlan'ny tsanganana roa eo amin'ny pejy iray",
+	'doublewiki-desc' => "Maneho pejy iray sy ny dikan-teniny avy amina wiki iray anaty tsanganana roa eo amin'ny pejy iray",
 );
 
 /** Macedonian (Македонски)
