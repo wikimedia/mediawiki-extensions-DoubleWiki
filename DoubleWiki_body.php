@@ -36,10 +36,14 @@ class DoubleWiki {
 	 * Read the list of matched phrases and add tags to the html output.
 	 */
 	function addMatchingTags ( &$text, $lang ) { 
-		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n<p>([^<]*?)<\/p>\n<\/div>/is"; 
-		if( ! preg_match( $pattern, $text, $m ) ) return ;
+		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n<p>([^<]*?)<\/p>\n<\/div>/is";
+		$m = array();
+		if( ! preg_match( $pattern, $text, $m ) ) {
+			return;
+		}
 		$text = str_replace( $m[1], '', $text );
-		$line_pattern = "/\s*([^:\n]*?)\s*:\s*([^:\n]*?)\s*\n/i"; 
+		$line_pattern = "/\s*([^:\n]*?)\s*:\s*([^:\n]*?)\s*\n/i";
+		$items = array();
 		preg_match_all( $line_pattern, $m[1], $items, PREG_SET_ORDER );
 		foreach( $items as $n => $i ) {
 			$text = str_replace( $i[1], "<span id=\"dw-$n\" title=\"{$i[2]}\"/>".$i[1], $text );
@@ -145,6 +149,7 @@ class DoubleWiki {
 					$sub = substr( $right_text, 0, $a);
 					// detect the end of previous paragraph
 					// regexp matches the rightmost delimiter
+					$m = array();
 					if ( preg_match("/(.*)<\/(p|dl)>/is", $sub, $m ) ) {
 						$right_chunk .= $m[0];
 						$right_text = substr( $right_text, strlen($m[0]) );
@@ -201,6 +206,7 @@ class DoubleWiki {
 	function find_paragraphs( $text ) {
 		$result = Array();
 		$bits = preg_split( $this->tags, $text );
+		$m = array();
 		preg_match_all( $this->tags, $text, $m, PREG_SET_ORDER);
 		$counter = 0;
 		$out = '';
@@ -231,6 +237,7 @@ class DoubleWiki {
 
 		$tag_pattern = "/<span id=\"dw-[^\"]*\" title=\"([^\"]*)\"\/>/i";
 		$left_slices = preg_split( $tag_pattern, $left_text );
+		$left_tags = array();
 		preg_match_all( $tag_pattern, $left_text,  $left_tags, PREG_PATTERN_ORDER );
 		$n = count( $left_slices);
 
@@ -240,6 +247,7 @@ class DoubleWiki {
 		 */
 		for ( $i=0 ; $i < $n - 1 ; $i++ ) {
 			$str = $left_slices[$i];
+			$m = array();
 			if ( preg_match("/(.*)<(p|dl)>/is", $str, $m ) ) { 
 				$left_slices[$i] = $m[1];
 				$left_slices[$i+1] = substr( $str, strlen($m[1]) ) . $left_slices[$i+1];
@@ -254,6 +262,7 @@ class DoubleWiki {
 		$stack = array();
 		for( $i=0 ; $i < $n ; $i++) {
 			$bits = preg_split( $this->tags, $left_slices[$i] );
+			$m = array();
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER);
 			$counter = 0;
 			for($k=0 ; $k < count($m) ; $k++) {
