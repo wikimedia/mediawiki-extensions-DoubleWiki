@@ -618,6 +618,13 @@ $messages['tr'] = array(
 	'doublewiki-desc' => 'Bir sayfayı ve başka bir vikiden çevirisini, aynı sayfanın iki sütununda gösterir.',
 );
 
+/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'doublewiki-desc' => 'Битне һәм аның башка викидагы тәрҗемәсен ике баганада күрсәтә',
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  */
