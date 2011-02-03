@@ -597,6 +597,13 @@ $messages['tg-latn'] = array(
 	'doublewiki-desc' => 'Jak sahifa va tarçumai onro az jak viki digar dar du sutun dar hamon sahifa namoiş medihad',
 );
 
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'doublewiki-desc' => 'แสดงหน้าและคำแปลจากวิกิอื่นเป็นสองคอลัมน์ในหน้าเดียวกัน',
+);
+
 /** Turkmen (Türkmençe)
  * @author Hanberke
  */
