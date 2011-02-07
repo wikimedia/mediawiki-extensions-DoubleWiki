@@ -22,9 +22,9 @@
 # that can be accessed through interlanguage links
 
 
-$wgHooks['ParserFirstCallInit'][] = 'wfDoubleWiki';
 $wgExtensionMessagesFiles['DoubleWiki'] = dirname(__FILE__)  . '/DoubleWiki.i18n.php';
 $wgAutoloadClasses['DoubleWiki'] = dirname( __FILE__ ) . "/DoubleWiki_body.php";
+$wgHooks['OutputPageBeforeHTML'][] = array( new DoubleWiki, 'addMatchedText' );
 
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
@@ -33,11 +33,3 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'http://wikisource.org/wiki/Wikisource:DoubleWiki_Extension',
 	'descriptionmsg' => 'doublewiki-desc',
 );
-
-
-function wfDoubleWiki() {
-	new DoubleWiki;
-	return true;
-}
-
-
