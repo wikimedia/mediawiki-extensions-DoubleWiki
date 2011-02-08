@@ -105,7 +105,6 @@ class DoubleWiki {
 		return true;
 	}
 
-
 	/*
 	 * Format the text as a two-column table with aligned paragraphs
 	 */
@@ -190,8 +189,6 @@ class DoubleWiki {
 		return $head . $body . "</table>" ;
 	}
 
-
-
 	/*
 	 * Split text and return a set of html-balanced paragraphs
 	 */
@@ -220,7 +217,6 @@ class DoubleWiki {
 		}
 		return $result; 
 	}
-
 
 	/*
 	 * Split text and return a set of html-balanced slices
@@ -253,7 +249,6 @@ class DoubleWiki {
 		 */
 		$stack = array();
 		for( $i=0 ; $i < $n ; $i++) {
-			$bits = preg_split( $this->tags, $left_slices[$i] );
 			$m = array();
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER);
 			$counter = 0;
@@ -263,7 +258,7 @@ class DoubleWiki {
 					$counter++;
 					array_push($stack, $t);
 				} else {
-					$tt = array_pop($stack);
+					array_pop($stack);
 					$counter--;
 				}
 			}
@@ -278,7 +273,7 @@ class DoubleWiki {
 			} else if( $i == $n - 1 ) {
 				$left_slices[$i] = $opening . $left_slices[$i];
 			} else if( $counter != 0 ) {
-				$left_slices[$i+1] = $left_slices[$i] . $left_slices[$i+1];
+				$left_slices[$i + 1] = $left_slices[$i] . $left_slices[$i+1];
 				$left_slices[$i] = '';
 			}
 		}
