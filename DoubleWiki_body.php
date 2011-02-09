@@ -42,6 +42,11 @@ class DoubleWiki {
 		}
 	}
 
+	static function OutputPageBeforeHTML( &$parserOutput , &$text ) {
+		$dw = new self();
+		$dw->addMatchedText( $parserOutput, $text );
+	}
+
 	/*
 	 * Hook function called with &match=lang
 	 * Transform $text into a bilingual version

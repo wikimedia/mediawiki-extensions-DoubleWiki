@@ -24,7 +24,7 @@
 
 $wgExtensionMessagesFiles['DoubleWiki'] = dirname(__FILE__)  . '/DoubleWiki.i18n.php';
 $wgAutoloadClasses['DoubleWiki'] = dirname( __FILE__ ) . "/DoubleWiki_body.php";
-$wgHooks['OutputPageBeforeHTML'][] = array( new DoubleWiki, 'addMatchedText' );
+$wgHooks['OutputPageBeforeHTML'][] = array( 'DoubleWiki', 'OutputPageBeforeHTML' );
 
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
