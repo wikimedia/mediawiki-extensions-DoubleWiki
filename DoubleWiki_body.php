@@ -45,6 +45,7 @@ class DoubleWiki {
 	static function OutputPageBeforeHTML( &$parserOutput , &$text ) {
 		$dw = new self();
 		$dw->addMatchedText( $parserOutput, $text );
+		return true;
 	}
 
 	/*
