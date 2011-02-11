@@ -48,9 +48,11 @@ class DoubleWiki {
 		return true;
 	}
 
-	/*
+	/**
 	 * Hook function called with &match=lang
 	 * Transform $text into a bilingual version
+	 * @param $parserOutput ParserOutput
+	 * @param $text
 	 */
 	function addMatchedText ( &$parserOutput , &$text ) { 
 
@@ -105,7 +107,6 @@ class DoubleWiki {
 					$text = $this->matchColumns ( $text, $myLanguage, $myURL, $wgContLanguageCode, 
 							       $translation, $languageName, $url, $match_request );
 				}
-				return true;
 			}
 		}
 		return true;
@@ -123,7 +124,7 @@ class DoubleWiki {
 		$left_chunk = '';
 		$right_chunk = ''; 
 
-		for ( $i=0 ; $i < count($left_slices) ; $i++ ) {
+		for ( $i=0 ; $i < count( $left_slices ); $i++ ) {
 
 			// some slices might be empty
 			if( $left_slices[$i] == '' ) {
@@ -205,7 +206,7 @@ class DoubleWiki {
 		preg_match_all( $this->tags, $text, $m, PREG_SET_ORDER);
 		$counter = 0;
 		$out = '';
-		for($i=0; $i < count($m); $i++){
+		for( $i = 0; $i < count( $m ); $i++ ){
 			$t = $m[$i][0];
 			if( substr( $t, 0, 2) != "</" ) {
 				$counter++;
@@ -213,12 +214,12 @@ class DoubleWiki {
 				$counter--;
 			}
 			$out .= $bits[$i] . $t;
-			if( ($t == "</p>" || $t == "</dl>" ) && $counter==0 ) {
+			if( ( $t == "</p>" || $t == "</dl>" ) && $counter == 0 ) {
 				$result[] = $out;
 				$out = '';
 			}
 		}
-		if($out) {
+		if( $out ) {
 			$result[] = $out;
 		}
 		return $result; 
@@ -239,7 +240,7 @@ class DoubleWiki {
 		 * Make slices that are full paragraphs
 		 * If two slices correspond to the same paragraph, the second one will be empty
 		 */
-		for ( $i=0 ; $i < $n - 1 ; $i++ ) {
+		for ( $i=0; $i < $n - 1; $i++ ) {
 			$str = $left_slices[$i];
 			$m = array();
 			if ( preg_match("/(.*)<(p|dl)>/is", $str, $m ) ) { 
@@ -256,7 +257,7 @@ class DoubleWiki {
 		$stack = array();
 		$opening = '';
 
-		for( $i=0 ; $i < $n ; $i++) {
+		for( $i = 0; $i < $n; $i++ ) {
 			$m = array();
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER);
 			$counter = 0;
@@ -270,7 +271,7 @@ class DoubleWiki {
 					$counter--;
 				}
 			}
-			if( $i==0 ) {
+			if( $i == 0 ) {
 				$closure = '';
 				for( $k=0; $k < $counter ; $k++ ) {
 					$opening .= "<".$stack[$k][1].">";
