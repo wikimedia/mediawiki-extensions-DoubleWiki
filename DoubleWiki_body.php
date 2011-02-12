@@ -42,21 +42,21 @@ class DoubleWiki {
 		}
 	}
 
-	static function OutputPageBeforeHTML( &$parserOutput , &$text ) {
+	static function OutputPageBeforeHTML( &$out, &$text ) {
 		$dw = new self();
-		$dw->addMatchedText( $parserOutput, $text );
+		$dw->addMatchedText( $out, $text );
 		return true;
 	}
 
 	/**
 	 * Hook function called with &match=lang
 	 * Transform $text into a bilingual version
-	 * @param $parserOutput ParserOutput
+	 * @param $out OutputPage
 	 * @param $text
 	 */
-	function addMatchedText ( &$parserOutput , &$text ) { 
+	function addMatchedText( &$out, &$text ) {
 
-		global $wgContLang, $wgRequest, $wgLang, $wgContLanguageCode, $wgTitle;
+		global $wgContLang, $wgRequest, $wgLang, $wgContLanguageCode;
 
 		$match_request = $wgRequest->getText( 'match' );
 		if ( $match_request === '' ) { 
@@ -64,12 +64,12 @@ class DoubleWiki {
 		}
 		$this->addMatchingTags ( $text, $match_request );
 
-		foreach( $parserOutput->mLanguageLinks as $l ) {
+		foreach( $out->mLanguageLinks as $l ) {
 			$nt = Title::newFromText( $l );
 			$iw = $nt->getInterwiki();
 			if( $iw === $match_request ){
 				$url =  $nt->getFullURL(); 
-				$myURL = $wgTitle -> getLocalURL() ;
+				$myURL = $out->getTitle()->getLocalURL();
 				$languageName = $wgContLang->getLanguageName( $nt->getInterwiki() );
 				$myLanguage = $wgLang->getLanguageName( $wgContLanguageCode );
 
