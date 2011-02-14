@@ -124,7 +124,8 @@ class DoubleWiki {
 		$left_chunk = '';
 		$right_chunk = ''; 
 
-		for ( $i=0 ; $i < count( $left_slices ); $i++ ) {
+		$leftSliceCount = count( $left_slices );
+		for ( $i=0 ; $i < $leftSliceCount; $i++ ) {
 
 			// some slices might be empty
 			if( $left_slices[$i] == '' ) {
@@ -171,7 +172,8 @@ class DoubleWiki {
 
 				$left_chunk  = '';
 				$right_chunk = '';
-				for($l=0; $l < count( $left_bits ) ; $l++ ) {
+				$leftBitCount = count( $left_bits );
+				for($l=0; $l < $leftBitCount ; $l++ ) {
 					$body .= 
 					  "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" lang=\"{$left_lang}\">"
 					  ."<div style=\"width:35em; margin:0px auto\">\n".$left_bits[$l]."</div>"
@@ -206,7 +208,8 @@ class DoubleWiki {
 		preg_match_all( $this->tags, $text, $m, PREG_SET_ORDER);
 		$counter = 0;
 		$out = '';
-		for( $i = 0; $i < count( $m ); $i++ ){
+		$matchCount = count( $m );
+		for( $i = 0; $i < $matchCount; $i++ ){
 			$t = $m[$i][0];
 			if( substr( $t, 0, 2) != "</" ) {
 				$counter++;
@@ -261,7 +264,8 @@ class DoubleWiki {
 			$m = array();
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER);
 			$counter = 0;
-			for($k=0 ; $k < count($m) ; $k++) {
+			$matchCount = count( $m );
+			for($k=0 ; $k < $matchCount ; $k++) {
 				$t = $m[$k];
 				if( substr( $t[0], 0, 2) != "</" ) {
 					$counter++;
