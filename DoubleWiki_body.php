@@ -135,7 +135,7 @@ class DoubleWiki {
 			$left_chunk .= $left_slices[$i];
 
 			# if we are at the end of the loop, finish quickly
-			if ( $i == count( $left_slices ) - 1 ) {
+			if ( $i == $leftSliceCount - 1 ) {
 				$right_chunk .= $right_text;
 				$found = true;
 			} else {
@@ -164,8 +164,8 @@ class DoubleWiki {
 				// $body .= "<tr style=\"background-color:#ffdddd;\"><td>".count($left_bits)."</td><td>".count($right_bits)."</td></tr>\n";
 				// Do not align paragraphs if counts are different
 				if ( count( $left_bits ) != count( $right_bits ) ) {
-					$left_bits  = Array( $left_chunk );
-					$right_bits = Array( $right_chunk );
+					$left_bits = array( $left_chunk );
+					$right_bits = array( $right_chunk );
 				}
 
 				$left_chunk  = '';
