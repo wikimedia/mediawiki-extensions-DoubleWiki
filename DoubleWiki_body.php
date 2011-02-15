@@ -27,18 +27,18 @@ class DoubleWiki {
 	/*
 	 * Read the list of matched phrases and add tags to the html output.
 	 */
-	function addMatchingTags ( &$text, $lang ) { 
+	function addMatchingTags ( &$text, $lang ) {
 		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n<p>([^<]*?)<\/p>\n<\/div>/is";
 		$m = array();
-		if( ! preg_match( $pattern, $text, $m ) ) {
+		if ( ! preg_match( $pattern, $text, $m ) ) {
 			return;
 		}
 		$text = str_replace( $m[1], '', $text );
 		$line_pattern = "/\s*([^:\n]*?)\s*:\s*([^:\n]*?)\s*\n/i";
 		$items = array();
 		preg_match_all( $line_pattern, $m[1], $items, PREG_SET_ORDER );
-		foreach( $items as $n => $i ) {
-			$text = str_replace( $i[1], "<span id=\"dw-$n\" title=\"{$i[2]}\"/>".$i[1], $text );
+		foreach ( $items as $n => $i ) {
+			$text = str_replace( $i[1], "<span id=\"dw-$n\" title=\"{$i[2]}\"/>" . $i[1], $text );
 		}
 	}
 
@@ -58,51 +58,51 @@ class DoubleWiki {
 		global $wgContLang, $wgRequest, $wgLang, $wgContLanguageCode;
 
 		$match_request = $wgRequest->getText( 'match' );
-		if ( $match_request === '' ) { 
+		if ( $match_request === '' ) {
 			return true;
 		}
 		$this->addMatchingTags ( $text, $match_request );
 
-		foreach( $out->mLanguageLinks as $l ) {
+		foreach ( $out->mLanguageLinks as $l ) {
 			$nt = Title::newFromText( $l );
 			$iw = $nt->getInterwiki();
-			if ( $iw === $match_request ){
-				$url =  $nt->getFullURL(); 
+			if ( $iw === $match_request ) {
+				$url =  $nt->getFullURL();
 				$myURL = $out->getTitle()->getLocalURL();
 				$languageName = $wgContLang->getLanguageName( $nt->getInterwiki() );
 				$myLanguage = $wgLang->getLanguageName( $wgContLanguageCode );
 
 				$translation = Http::get( wfAppendQuery( $url, array( 'action' => 'render' ) ) );
 				if ( $translation !== null ) {
-					#first find all links that have no 'class' parameter.
-					#these links are local so we add '?match=xx' to their url, 
-					#unless it already contains a '?' 
-					$translation = preg_replace( 
+					# first find all links that have no 'class' parameter.
+					# these links are local so we add '?match=xx' to their url,
+					# unless it already contains a '?'
+					$translation = preg_replace(
 						"/<a href=\"http:\/\/([^\"\?]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
 						"<a href=\"http://\\1?match={$wgContLanguageCode}\"\\2>", $translation );
-					#now add class='extiw' to these links
-					$translation = preg_replace( 
+					# now add class='extiw' to these links
+					$translation = preg_replace(
 						"/<a href=\"http:\/\/([^\"]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
 						"<a href=\"http://\\1\" class=\"extiw\"\\3>", $translation );
-					#use class='extiw' for images too
+					# use class='extiw' for images too
 					$translation = preg_replace(
 						"/<a href=\"http:\/\/([^\"]*)\"([^\>]*)class=\"image\"([^\>]*)\>/i",
 						"<a href=\"http://\\1\"\\2class=\"extiw\"\\3>", $translation );
 
-					#add prefixes to internal links, in order to prevent duplicates
-					$translation = preg_replace("/<a href=\"#(.*?)\"/i","<a href=\"#l_\\1\"",
+					# add prefixes to internal links, in order to prevent duplicates
+					$translation = preg_replace( "/<a href=\"#(.*?)\"/i", "<a href=\"#l_\\1\"",
 								    $translation );
-					$translation = preg_replace("/<li id=\"(.*?)\"/i","<li id=\"l_\\1\"",
+					$translation = preg_replace( "/<li id=\"(.*?)\"/i", "<li id=\"l_\\1\"",
 								    $translation );
-					$text = preg_replace("/<a href=\"#(.*?)\"/i","<a href=\"#r_\\1\"", $text );
-					$text = preg_replace("/<li id=\"(.*?)\"/i","<li id=\"r_\\1\"", $text );
+					$text = preg_replace( "/<a href=\"#(.*?)\"/i", "<a href=\"#r_\\1\"", $text );
+					$text = preg_replace( "/<li id=\"(.*?)\"/i", "<li id=\"r_\\1\"", $text );
 
-					#add ?match= to local links of the local wiki
+					# add ?match= to local links of the local wiki
 					$text = preg_replace( "/<a href=\"\/([^\"\?]*)\"/i",
 							"<a href=\"/\\1?match={$match_request}\"", $text );
 
-					#do the job
-					$text = $this->matchColumns ( $text, $myLanguage, $myURL, $wgContLanguageCode, 
+					# do the job
+					$text = $this->matchColumns ( $text, $myLanguage, $myURL, $wgContLanguageCode,
 							       $translation, $languageName, $url, $match_request );
 				}
 			}
@@ -120,14 +120,14 @@ class DoubleWiki {
 
 		$body = '';
 		$left_chunk = '';
-		$right_chunk = ''; 
+		$right_chunk = '';
 
 		$leftSliceCount = count( $left_slices );
-		for ( $i=0 ; $i < $leftSliceCount; $i++ ) {
+		for ( $i = 0 ; $i < $leftSliceCount; $i++ ) {
 
 			// some slices might be empty
-			if( $left_slices[$i] == '' ) {
-				continue; 
+			if ( $left_slices[$i] == '' ) {
+				continue;
 			}
 
 			$found = false;
@@ -135,28 +135,28 @@ class DoubleWiki {
 			$left_chunk .= $left_slices[$i];
 
 			# if we are at the end of the loop, finish quickly
-			if ( $i== count( $left_slices ) - 1 ) { 
+			if ( $i == count( $left_slices ) - 1 ) {
 				$right_chunk .= $right_text;
 				$found = true;
 			} else {
-				#look for requested tag in the text
+				# look for requested tag in the text
 				$a = strpos ( $right_text, $tag );
-				if( $a ) {
-					$found = true; 
-					$sub = substr( $right_text, 0, $a);
+				if ( $a ) {
+					$found = true;
+					$sub = substr( $right_text, 0, $a );
 					// detect the end of previous paragraph
 					// regexp matches the rightmost delimiter
 					$m = array();
-					if ( preg_match("/(.*)<\/(p|dl)>/is", $sub, $m ) ) {
+					if ( preg_match( "/(.*)<\/(p|dl)>/is", $sub, $m ) ) {
 						$right_chunk .= $m[0];
-						$right_text = substr( $right_text, strlen($m[0]) );
+						$right_text = substr( $right_text, strlen( $m[0] ) );
 					}
-				#} else {
+				# } else {
 				#	print "<br/>tag not found ".$tag;
 				}
 			}
 
-			if( $found && $right_chunk ) {
+			if ( $found && $right_chunk ) {
 				// Detect paragraphs
 				$left_bits  = $this->find_paragraphs( $left_chunk );
 				$right_bits = $this->find_paragraphs( $right_chunk );
@@ -171,13 +171,13 @@ class DoubleWiki {
 				$left_chunk  = '';
 				$right_chunk = '';
 				$leftBitCount = count( $left_bits );
-				for($l=0; $l < $leftBitCount ; $l++ ) {
-					$body .= 
+				for ( $l = 0; $l < $leftBitCount ; $l++ ) {
+					$body .=
 					  "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" lang=\"{$left_lang}\">"
-					  ."<div style=\"width:35em; margin:0px auto\">\n".$left_bits[$l]."</div>"
-					  ."</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" lang=\"{$right_lang}\">"
-					  ."<div style=\"width:35em; margin:0px auto\">\n".$right_bits[$l]."</div>"
-					  ."</td></tr>\n";
+					  . "<div style=\"width:35em; margin:0px auto\">\n" . $left_bits[$l] . "</div>"
+					  . "</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" lang=\"{$right_lang}\">"
+					  . "<div style=\"width:35em; margin:0px auto\">\n" . $right_bits[$l] . "</div>"
+					  . "</td></tr>\n";
 				}
 			}
 		}
@@ -185,7 +185,7 @@ class DoubleWiki {
 		// format table head and return results
 		$left_url = htmlspecialchars( $left_url );
 		$right_url = htmlspecialchars( $right_url );
-		$head = 
+		$head =
 		  "<table id=\"doubleWikiTable\" width=\"100%\" border=\"0\" bgcolor=\"white\" rules=\"cols\" cellpadding=\"0\">
 <colgroup><col width=\"50%\"/><col width=\"50%\"/></colgroup><thead>
 <tr><td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$left_lang}\">
@@ -207,23 +207,23 @@ class DoubleWiki {
 		$counter = 0;
 		$out = '';
 		$matchCount = count( $m );
-		for( $i = 0; $i < $matchCount; $i++ ){
+		for ( $i = 0; $i < $matchCount; $i++ ) {
 			$t = $m[$i][0];
-			if( substr( $t, 0, 2) != "</" ) {
+			if ( substr( $t, 0, 2 ) != "</" ) {
 				$counter++;
 			} else {
 				$counter--;
 			}
 			$out .= $bits[$i] . $t;
-			if( ( $t == "</p>" || $t == "</dl>" ) && $counter == 0 ) {
+			if ( ( $t == "</p>" || $t == "</dl>" ) && $counter == 0 ) {
 				$result[] = $out;
 				$out = '';
 			}
 		}
-		if( $out ) {
+		if ( $out ) {
 			$result[] = $out;
 		}
-		return $result; 
+		return $result;
 	}
 
 	/*
@@ -235,22 +235,22 @@ class DoubleWiki {
 		$left_slices = preg_split( $tag_pattern, $left_text );
 		$left_tags = array();
 		preg_match_all( $tag_pattern, $left_text,  $left_tags, PREG_PATTERN_ORDER );
-		$n = count( $left_slices);
+		$n = count( $left_slices );
 
-		/* 
+		/*
 		 * Make slices that are full paragraphs
 		 * If two slices correspond to the same paragraph, the second one will be empty
 		 */
-		for ( $i=0; $i < $n - 1; $i++ ) {
+		for ( $i = 0; $i < $n - 1; $i++ ) {
 			$str = $left_slices[$i];
 			$m = array();
-			if ( preg_match("/(.*)<(p|dl)>/is", $str, $m ) ) { 
+			if ( preg_match( "/(.*)<(p|dl)>/is", $str, $m ) ) {
 				$left_slices[$i] = $m[1];
-				$left_slices[$i+1] = substr( $str, strlen($m[1]) ) . $left_slices[$i+1];
+				$left_slices[$i + 1] = substr( $str, strlen( $m[1] ) ) . $left_slices[$i + 1];
 			}
 		}
 
-		/* 
+		/*
 		 * Keep only slices that contain balanced html
 		 * If a slice is unbalanced, we merge it with the next one.
 		 * The first and last slices are compensated.
@@ -258,36 +258,36 @@ class DoubleWiki {
 		$stack = array();
 		$opening = '';
 
-		for( $i = 0; $i < $n; $i++ ) {
+		for ( $i = 0; $i < $n; $i++ ) {
 			$m = array();
-			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER);
+			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER );
 			$counter = 0;
 			$matchCount = count( $m );
-			for($k=0 ; $k < $matchCount ; $k++) {
+			for ( $k = 0 ; $k < $matchCount ; $k++ ) {
 				$t = $m[$k];
-				if( substr( $t[0], 0, 2) != "</" ) {
+				if ( substr( $t[0], 0, 2 ) != "</" ) {
 					$counter++;
-					array_push($stack, $t);
+					array_push( $stack, $t );
 				} else {
-					array_pop($stack);
+					array_pop( $stack );
 					$counter--;
 				}
 			}
-			if( $i == 0 ) {
+			if ( $i == 0 ) {
 				$closure = '';
-				for( $k=0; $k < $counter ; $k++ ) {
-					$opening .= "<".$stack[$k][1].">";
-					$closure = "</".$stack[$k][1].">" . $closure;
+				for ( $k = 0; $k < $counter ; $k++ ) {
+					$opening .= "<" . $stack[$k][1] . ">";
+					$closure = "</" . $stack[$k][1] . ">" . $closure;
 				}
 				$left_slices[$i] = $left_slices[$i] . $closure;
-			} else if( $i == $n - 1 ) {
+			} else if ( $i == $n - 1 ) {
 				$left_slices[$i] = $opening . $left_slices[$i];
-			} else if( $counter != 0 ) {
-				$left_slices[$i + 1] = $left_slices[$i] . $left_slices[$i+1];
+			} else if ( $counter != 0 ) {
+				$left_slices[$i + 1] = $left_slices[$i] . $left_slices[$i + 1];
 				$left_slices[$i] = '';
 			}
 		}
-		return array($left_slices, $left_tags);
+		return array( $left_slices, $left_tags );
 	}
 
 }
