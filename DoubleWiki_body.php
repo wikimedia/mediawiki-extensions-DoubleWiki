@@ -22,7 +22,7 @@ class DoubleWiki {
 	/*
 	 * Tags that must be closed. (list copied from Sanitizer.php)
 	 */
-	var $tags = "/<\/?(b|del|i|ins|u|font|big|small|sub|sup|h1|h2|h3|h4|h5|h6|cite|code|em|s|strike|strong|tt|tr|td|var|div|center|blockquote|ol|ul|dl|table|caption|pre|ruby|rt|rb|rp|p|span)([\s](.*?)>|>)/i";
+	var $tags = '/<\/?(b|del|i|ins|u|font|big|small|sub|sup|h1|h2|h3|h4|h5|h6|cite|code|em|s|strike|strong|tt|tr|td|var|div|center|blockquote|ol|ul|dl|table|caption|pre|ruby|rt|rb|rp|p|span)([\s](.*?)>|>)/i';
 
 	/*
 	 * Read the list of matched phrases and add tags to the html output.
@@ -55,7 +55,6 @@ class DoubleWiki {
 	 * @param $text
 	 */
 	function addMatchedText( &$out, &$text ) {
-
 		global $wgContLang, $wgRequest, $wgLang, $wgContLanguageCode;
 
 		$match_request = $wgRequest->getText( 'match' );
@@ -67,14 +66,13 @@ class DoubleWiki {
 		foreach( $out->mLanguageLinks as $l ) {
 			$nt = Title::newFromText( $l );
 			$iw = $nt->getInterwiki();
-			if( $iw === $match_request ){
+			if ( $iw === $match_request ){
 				$url =  $nt->getFullURL(); 
 				$myURL = $out->getTitle()->getLocalURL();
 				$languageName = $wgContLang->getLanguageName( $nt->getInterwiki() );
 				$myLanguage = $wgLang->getLanguageName( $wgContLanguageCode );
 
-				$sep = ( in_string( '?', $url ) ) ? '&' : '?'; 
-				$translation = Http::get( $url.$sep.'action=render' );
+				$translation = Http::get( wfAppendQuery( $url, array( 'action' => 'render' ) ) );
 				if ( $translation !== null ) {
 					#first find all links that have no 'class' parameter.
 					#these links are local so we add '?match=xx' to their url, 
@@ -205,7 +203,7 @@ class DoubleWiki {
 		$result = Array();
 		$bits = preg_split( $this->tags, $text );
 		$m = array();
-		preg_match_all( $this->tags, $text, $m, PREG_SET_ORDER);
+		preg_match_all( $this->tags, $text, $m, PREG_SET_ORDER );
 		$counter = 0;
 		$out = '';
 		$matchCount = count( $m );
