@@ -15,8 +15,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
-
-
 class DoubleWiki {
 
 	/**
@@ -55,7 +53,7 @@ class DoubleWiki {
 	 * @param $text
 	 */
 	function addMatchedText( &$out, &$text ) {
-		global $wgContLang, $wgRequest, $wgLang, $wgMemc, $wgDoubleWikiCacheTime;
+		global $wgContLang, $wgContLanguageCode, $wgRequest, $wgLang, $wgMemc, $wgDoubleWikiCacheTime;
 
 		$match_request = $wgRequest->getText( 'match' );
 		if ( $match_request === '' ) {
@@ -65,55 +63,63 @@ class DoubleWiki {
 
 		$langLinks = $out->getLanguageLinks();
 
-		if ( isset( $langLinks[$match_request] ) ) {
-			$nt = Title::newFromText( $langLinks[$match_request] );
+		foreach( $langLinks as $l) {
+			$nt = Title::newFromText( $l );
+			$iw = $nt->getInterwiki();
 
-			$key = wfMemcKey( 'doublewiki', $wgLang->getCode(), $nt->getPrefixedDbKey() );
-			$cachedText = $wgMemc->get( $key );
-			if( $cachedText ) {
-				$text = $cachedText;
-			} else {
-				$url =  $nt->getFullURL();
-				$myURL = $out->getTitle()->getLocalURL();
-				$languageName = $wgContLang->getLanguageName( $nt->getInterwiki() );
-				$myLanguage = $wgLang->getLanguageName( $wgContLang->getCode() );
-				$translation = Http::get( wfAppendQuery( $url, array( 'action' => 'render' ) ) );
-				if ( $translation !== null ) {
-					/**
-					 * first find all links that have no 'class' parameter.
-					 * these links are local so we add '?match=xx' to their url,
-					 * unless it already contains a '?'
-					 */
-					$translation = preg_replace(
-						"/<a href=\"http:\/\/([^\"\?]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
-						"<a href=\"http://\\1?match={$wgContLanguageCode}\"\\2>", $translation );
-					// now add class='extiw' to these links
-					$translation = preg_replace(
-						"/<a href=\"http:\/\/([^\"]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
-						"<a href=\"http://\\1\" class=\"extiw\"\\3>", $translation );
-					// use class='extiw' for images too
-					$translation = preg_replace(
-						"/<a href=\"http:\/\/([^\"]*)\"([^\>]*)class=\"image\"([^\>]*)\>/i",
-						"<a href=\"http://\\1\"\\2class=\"extiw\"\\3>", $translation );
+			if ( $iw === $match_request ) {
+				$nt = Title::newFromText( $langLinks[$match_request] );
 
-					// add prefixes to internal links, in order to prevent duplicates
-					$translation = preg_replace( "/<a href=\"#(.*?)\"/i", "<a href=\"#l_\\1\"",
-									$translation );
-					$translation = preg_replace( "/<li id=\"(.*?)\"/i", "<li id=\"l_\\1\"",
-									$translation );
-					$text = preg_replace( "/<a href=\"#(.*?)\"/i", "<a href=\"#r_\\1\"", $text );
-					$text = preg_replace( "/<li id=\"(.*?)\"/i", "<li id=\"r_\\1\"", $text );
+				$key = wfMemcKey( 'doublewiki', $wgLang->getCode(), $nt->getPrefixedDbKey() );
+				$cachedText = $wgMemc->get( $key );
 
-					// add ?match= to local links of the local wiki
-					$text = preg_replace( "/<a href=\"\/([^\"\?]*)\"/i",
-							"<a href=\"/\\1?match={$match_request}\"", $text );
+				if( $cachedText ) {
+					$text = $cachedText;
+				} else {
+					$url =  $nt->getFullURL();
+					$myURL = $out->getTitle()->getLocalURL();
+					$languageName = $wgContLang->getLanguageName( $iw );
+					$myLanguage = $wgLang->getLanguageName( $wgContLang->getCode() );
+					$translation = Http::get( wfAppendQuery( $url, array( 'action' => 'render' ) ) );
 
-					// do the job
-					$text = $this->matchColumns ( $text, $myLanguage, $myURL, $wgContLanguageCode,
-								   $translation, $languageName, $url, $match_request );
+					if ( $translation !== null ) {
+						/**
+						 * first find all links that have no 'class' parameter.
+						 * these links are local so we add '?match=xx' to their url,
+						 * unless it already contains a '?'
+						 */
+						$translation = preg_replace(
+							"/<a href=\"http:\/\/([^\"\?]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
+							"<a href=\"http://\\1?match={$wgContLanguageCode}\"\\2>", $translation );
+						// now add class='extiw' to these links
+						$translation = preg_replace(
+							"/<a href=\"http:\/\/([^\"]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
+							"<a href=\"http://\\1\" class=\"extiw\"\\3>", $translation );
+						// use class='extiw' for images too
+						$translation = preg_replace(
+							"/<a href=\"http:\/\/([^\"]*)\"([^\>]*)class=\"image\"([^\>]*)\>/i",
+							"<a href=\"http://\\1\"\\2class=\"extiw\"\\3>", $translation );
 
-					$wgMemc->set( $key, $text, $wgDoubleWikiCacheTime );
+						// add prefixes to internal links, in order to prevent duplicates
+						$translation = preg_replace( "/<a href=\"#(.*?)\"/i", "<a href=\"#l_\\1\"",
+										$translation );
+						$translation = preg_replace( "/<li id=\"(.*?)\"/i", "<li id=\"l_\\1\"",
+										$translation );
+						$text = preg_replace( "/<a href=\"#(.*?)\"/i", "<a href=\"#r_\\1\"", $text );
+						$text = preg_replace( "/<li id=\"(.*?)\"/i", "<li id=\"r_\\1\"", $text );
+
+						// add ?match= to local links of the local wiki
+						$text = preg_replace( "/<a href=\"\/([^\"\?]*)\"/i",
+								"<a href=\"/\\1?match={$match_request}\"", $text );
+
+						// do the job
+						$text = $this->matchColumns ( $text, $myLanguage, $myURL, $wgContLanguageCode,
+									   $translation, $languageName, $url, $match_request );
+
+						$wgMemc->set( $key, $text, $wgDoubleWikiCacheTime );
+					}
 				}
+				break;
 			}
 		}
 		return true;
