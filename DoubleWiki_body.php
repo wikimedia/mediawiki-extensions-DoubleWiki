@@ -62,13 +62,11 @@ class DoubleWiki {
 		$this->addMatchingTags ( $text, $match_request );
 
 		$langLinks = $out->getLanguageLinks();
-
-		foreach( $langLinks as $l) {
+		foreach( $langLinks as $l ) {
 			$nt = Title::newFromText( $l );
 			$iw = $nt->getInterwiki();
 
 			if ( $iw === $match_request ) {
-				$nt = Title::newFromText( $langLinks[$match_request] );
 
 				$key = wfMemcKey( 'doublewiki', $wgLang->getCode(), $nt->getPrefixedDbKey() );
 				$cachedText = $wgMemc->get( $key );
