@@ -25,6 +25,8 @@
 $wgExtensionMessagesFiles['DoubleWiki'] = dirname(__FILE__)  . '/DoubleWiki.i18n.php';
 $wgAutoloadClasses['DoubleWiki'] = dirname( __FILE__ ) . "/DoubleWiki_body.php";
 $wgHooks['OutputPageBeforeHTML'][] = 'DoubleWiki::OutputPageBeforeHTML';
+// How long cached page output is stored in memcached
+$wgDoubleWikiCacheTime = 3600 * 12;
 
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
