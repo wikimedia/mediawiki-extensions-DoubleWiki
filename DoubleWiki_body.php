@@ -26,13 +26,13 @@ class DoubleWiki {
 	 * Read the list of matched phrases and add tags to the html output.
 	 */
 	function addMatchingTags ( &$text, $lang ) {
-		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n<p>([^<]*?)<\/p>\n<\/div>/is";
+		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\"><pre>(.*?)<\/pre>/is";
 		$m = array();
 		if ( ! preg_match( $pattern, $text, $m ) ) {
 			return;
 		}
 		$text = str_replace( $m[1], '', $text );
-		$line_pattern = '/\s*([^:\n]*?)\s*:\s*([^:\n]*?)\s*\n/i';
+		$line_pattern = '/\s*([^:\n]*?)\s*=\s*([^:\n]*?)\s*\n/i';
 		$items = array();
 		preg_match_all( $line_pattern, $m[1], $items, PREG_SET_ORDER );
 		foreach ( $items as $n => $i ) {
