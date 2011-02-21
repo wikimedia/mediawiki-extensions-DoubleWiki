@@ -26,7 +26,7 @@ class DoubleWiki {
 	 * Read the list of matched phrases and add tags to the html output.
 	 */
 	function addMatchingTags ( &$text, $lang ) {
-		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\"><pre>(.*?)<\/pre>/is";
+		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
 		$m = array();
 		if ( ! preg_match( $pattern, $text, $m ) ) {
 			return;
