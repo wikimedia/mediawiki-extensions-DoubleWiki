@@ -290,9 +290,9 @@ class DoubleWiki {
 					$closure = "</" . $stack[$k][1] . ">" . $closure;
 				}
 				$left_slices[$i] = $left_slices[$i] . $closure;
-			} else if ( $i == $n - 1 ) {
+			} elseif ( $i == $n - 1 ) {
 				$left_slices[$i] = $opening . $left_slices[$i];
-			} else if ( $counter != 0 ) {
+			} elseif ( $counter != 0 ) {
 				$left_slices[$i + 1] = $left_slices[$i] . $left_slices[$i + 1];
 				$left_slices[$i] = '';
 			}
