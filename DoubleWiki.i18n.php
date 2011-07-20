@@ -293,6 +293,13 @@ $messages['id'] = array(
 	'doublewiki-desc' => 'Menampilkan suatu halaman dan terjemahannya dari wiki lain pada dua kolom pada halaman yang sama',
 );
 
+/** Interlingue (Interlingue)
+ * @author Renan
+ */
+$messages['ie'] = array(
+	'doublewiki-desc' => 'Monstra un págine e tui traduction de altri wiki in du columnes del págine identic',
+);
+
 /** Igbo (Igbo)
  * @author Ukabia
  */
