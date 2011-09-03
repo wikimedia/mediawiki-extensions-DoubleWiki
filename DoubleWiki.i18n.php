@@ -513,6 +513,13 @@ $messages['ru'] = array(
 	'doublewiki-desc' => 'Показывает страницу и её перевод из другой вики в виде двух колонок',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'doublewiki-desc' => 'Указує сторінку і єй переклад з іншой вікі у двох колонках на єдній сторонї',
+);
+
 /** Sakha (Саха тыла)
  * @author HalanTul
  */
