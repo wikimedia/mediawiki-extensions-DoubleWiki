@@ -124,7 +124,7 @@ class DoubleWiki {
 		return true;
 	}
 
-	/*
+	/**
 	 * Format the text as a two-column table with aligned paragraphs
 	 */
 	function matchColumns( $left_text, $left_title, $left_url, $left_lang,
