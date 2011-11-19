@@ -26,7 +26,7 @@ class DoubleWiki {
 	 * Read the list of matched phrases and add tags to the html output.
 	 */
 	function addMatchingTags ( &$text, $lang ) {
-		$pattern = "/<div id=\"align-$lang\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
+		$pattern = "/<div id=\"align-" . preg_quote( $lang, '/' ) . "\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
 		$m = array();
 		if ( ! preg_match( $pattern, $text, $m ) ) {
 			return;
@@ -36,7 +36,7 @@ class DoubleWiki {
 		$items = array();
 		preg_match_all( $line_pattern, $m[1], $items, PREG_SET_ORDER );
 		foreach ( $items as $n => $i ) {
-			$text = str_replace( $i[1], "<span id=\"dw-$n\" title=\"{$i[2]}\"/>" . $i[1], $text );
+			$text = str_replace( $i[1], "<span id=\"dw-" . preg_quote( $n, '/' ) . "\" title=\"{$i[2]}\"/>" . $i[1], $text );
 		}
 	}
 
