@@ -548,14 +548,14 @@ $messages['sq'] = array(
 	'doublewiki-desc' => 'Paraqet një faqe dhe përkthimin nga një wiki tjetër në dy kolona në faqen e njejtë',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'doublewiki-desc' => 'Приказује страну и њен превод с другог викија у две колоне на истој страни.',
 );
 
-/** Serbian Latin ekavian (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -597,14 +597,14 @@ $messages['tet'] = array(
 	'doublewiki-desc' => "Hatudu pájina ida ho traudusaun husi wiki seluk iha pájina ida de'it",
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'doublewiki-desc' => 'Як саҳифа ва тарҷумаи онро аз як вики дигар дар ду сутун дар ҳамон саҳифа намоиш медиҳад',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -639,7 +639,7 @@ $messages['tr'] = array(
 	'doublewiki-desc' => 'Bir sayfayı ve başka bir vikiden çevirisini, aynı sayfanın iki sütununda gösterir.',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
