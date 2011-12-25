@@ -438,7 +438,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'doublewiki-desc' => 'Viser en side og dens oversettelse fra en annen wiki side ved side',
 );
 
