@@ -394,10 +394,11 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'doublewiki-desc' => 'ഒരു താളും മറ്റൊരു വിക്കിയിലുള്ള അതിന്റെ പരിഭാഷയം, രണ്ടു കളങ്ങളിലായി ഒരേ താളിൽ പ്രദർശിപ്പിക്കുന്നു',
+	'doublewiki-desc' => 'ഒരു താളും മറ്റൊരു വിക്കിയിൽ നിന്നുള്ള അതിന്റെ പരിഭാഷയും, രണ്ടു കളങ്ങളിലായി ഒരേ താളിൽ പ്രദർശിപ്പിക്കുന്നു',
 );
 
 /** Marathi (मराठी)
@@ -412,6 +413,13 @@ $messages['mr'] = array(
  */
 $messages['ms'] = array(
 	'doublewiki-desc' => 'Memaparkan sesebuah laman berserta terjemahannya daripada wiki lain pada dua lajur yang bersebelahan',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'doublewiki-desc' => 'Viser en side og dens oversettelse fra en annen wiki side ved side',
 );
 
 /** Low German (Plattdüütsch)
@@ -433,13 +441,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'doublewiki-desc' => 'Syner ei sida og omsetjinga hennar frå ein annan wiki sida ved sida',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['nb'] = array(
-	'doublewiki-desc' => 'Viser en side og dens oversettelse fra en annen wiki side ved side',
 );
 
 /** Occitan (Occitan)
