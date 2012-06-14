@@ -55,7 +55,7 @@ $messages['arz'] = array(
 	'doublewiki-desc' => 'بيعرض صفحة و الترجمة بتاعتها من ويكى تانية على عمودين فى نفس الصفحة',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Esbardu
  */
 $messages['ast'] = array(
@@ -90,35 +90,35 @@ $messages['be-tarask'] = array(
 	'doublewiki-desc' => 'Паказвае старонку і яе пераклад зь іншай вікі ў выглядзе двух слупкоў',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'doublewiki-desc' => 'Показва страница и нейният превод от друго уики в две колони на една и съща страница',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
 	'doublewiki-desc' => 'Diskouez a ra, war daou vann ha war an hevelep pajenn, ur bajenn hag he zroidigezh adal ur wiki all',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
 	'doublewiki-desc' => 'Prikazuje stranicu i njen prijevod s drugog wiki projekta u dva stupca na istoj stranici',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author SMP
  */
 $messages['ca'] = array(
 	'doublewiki-desc' => "Mostra una pàgina i la seva traducció d'una altra wiki amb dues columnes a la mateixa pàgina",
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Matěj Grabovský
  */
 $messages['cs'] = array(
@@ -132,7 +132,7 @@ $messages['cy'] = array(
 	'doublewiki-desc' => 'Yn dangos un tudalen, a thudalen ar yr un pwnc oddi ar wici mewn iaith arall, ochr yn ochr ar yr un ddalen.',
 );
 
-/** Danish (Dansk)
+/** Danish (dansk)
  * @author Byrial
  */
 $messages['da'] = array(
@@ -174,14 +174,14 @@ $messages['eo'] = array(
 	'doublewiki-desc' => 'Montras paĝon kaj ties tradukon de aliaj vikio kun du kolumnoj en la sama paĝo',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Sanbec
  */
 $messages['es'] = array(
 	'doublewiki-desc' => 'Muestra una página y su traducción de otra wiki en dos columnas de la misma página',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author Theklan
  */
 $messages['eu'] = array(
@@ -195,21 +195,21 @@ $messages['fa'] = array(
 	'doublewiki-desc' => 'یک صفحه و ترجمهٔ آن از یک ویکی دیگر را در دو ستون در همان صفحه نمایش می‌دهد',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Cimon Avaro
  */
 $messages['fi'] = array(
 	'doublewiki-desc' => 'Näyttää sivun sekä sen käännöksen toisesta wikistä vierekkäisillä palstoilla.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Meithal
  */
 $messages['fr'] = array(
 	'doublewiki-desc' => 'Affiche une page et sa traduction depuis un autre wiki en deux colonnes sur la même page',
 );
 
-/** Franco-Provençal (Arpetan)
+/** Franco-Provençal (arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
@@ -258,7 +258,7 @@ $messages['hil'] = array(
 	'doublewiki-desc' => 'Nagapakita sang paghina kag iya gin-islan hambalanon halin sa iban nga wiki sa duwa ka kolum sang parehas nga pahina',
 );
 
-/** Croatian (Hrvatski)
+/** Croatian (hrvatski)
  * @author Dalibor Bosits
  */
 $messages['hr'] = array(
@@ -272,14 +272,14 @@ $messages['hsb'] = array(
 	'doublewiki-desc' => 'Zwobraznja stronu a jeje přełožk u druheho wikija w dwěmaj špaltomaj na samsnej stronje',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dani
  */
 $messages['hu'] = array(
 	'doublewiki-desc' => 'Az adott lap mellett megjeleníti annak fordítását egy másik wikiből, két oszlopban, ugyanazon az oldalon',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -307,7 +307,7 @@ $messages['ig'] = array(
 	'doublewiki-desc' => 'Ne zí ihü na ihe kuwáría asụsụ na ozor shí wiki nke ozor na kwádọ abụọ nke ihü ótù',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author BrokenArrow
  */
 $messages['it'] = array(
@@ -372,7 +372,7 @@ $messages['li'] = array(
 	'doublewiki-desc' => "Toent 'n pagina en de vertaling oet 'n andere wiki in twie kolomme op dezelfde pagina",
 );
 
-/** Latvian (Latviešu)
+/** Latvian (latviešu)
  * @author Xil
  */
 $messages['lv'] = array(
@@ -386,7 +386,7 @@ $messages['mg'] = array(
 	'doublewiki-desc' => "Maneho pejy iray sy ny dikan-teniny avy amina wiki iray anaty tsanganana roa eo amin'ny pejy iray",
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -436,7 +436,7 @@ $messages['nl'] = array(
 	'doublewiki-desc' => 'Presenteert een pagina en de vertaling uit een andere wiki in twee kolommen op dezelfde pagina',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
  * @author Harald Khan
  * @author Njardarlogar
  */
@@ -444,14 +444,14 @@ $messages['nn'] = array(
 	'doublewiki-desc' => 'Syner ei sida og omsetjinga hennar frå ein annan wiki sida ved sida',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'doublewiki-desc' => 'Aficha una pagina e sa traduccion dempuèi un autre wiki en doas colomnas sus la meteissa pagina',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -479,7 +479,7 @@ $messages['ps'] = array(
 	'doublewiki-desc' => 'د يوه بل ويکي نه د هماغه ويکي مخ او د هغه مخ ژباړه په يوه مخ کې د دوه کالمونو په توګه ښکاره کوي',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
  */
@@ -487,28 +487,28 @@ $messages['pt'] = array(
 	'doublewiki-desc' => 'Apresenta uma página e a sua tradução noutra wiki em duas colunas da mesma página',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Eduardo.mps
  */
 $messages['pt-br'] = array(
 	'doublewiki-desc' => 'Apresenta uma página e a sua tradução de outro wiki em duas colunas da mesma página',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'doublewiki-desc' => 'Arată o pagină și traducerea sa dintr-un alt wiki pe două coloane pe aceeași pagină',
 );
 
-/** Tarandíne (Tarandíne)
+/** tarandíne (tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'doublewiki-desc' => "Fà vedè 'na pàgene e le traduziune sue da n'otra Uicchi sus a doje culonne d'a stessa pàgene",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -522,42 +522,42 @@ $messages['rue'] = array(
 	'doublewiki-desc' => 'Указує сторінку і єй переклад з іншой вікі у двох колонках на єдній сторонї',
 );
 
-/** Sakha (Саха тыла)
+/** Sakha (саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
 	'doublewiki-desc' => 'Сирэй атын тылынан торумун (тылбааһын) манна иккис колонкаҕа сэргэстэһиннэрэ көрдөрөр',
 );
 
-/** Slovak (Slovenčina)
+/** Slovak (slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'doublewiki-desc' => 'Zobrazí stránku a jej preklad z inej wiki v dvoch stĺpcoch na jednej stránke',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'doublewiki-desc' => 'Prikaže stran in njen prevod iz drugega wikija v dveh stolpcih na isti strani',
 );
 
-/** Albanian (Shqip)
+/** Albanian (shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'doublewiki-desc' => 'Paraqet një faqe dhe përkthimin nga një wiki tjetër në dy kolona në faqen e njejtë',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'doublewiki-desc' => 'Приказује страну и њен превод с другог викија у две колоне на истој страни.',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -578,7 +578,7 @@ $messages['su'] = array(
 	'doublewiki-desc' => 'Némbongkeun hiji kaca katut alih basana ti wiki séjén dina dua kolom',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Lejonel
  */
 $messages['sv'] = array(
@@ -592,21 +592,21 @@ $messages['te'] = array(
 	'doublewiki-desc' => 'పేజీని, మరో వికీలో దాని అనువాదాన్ని ఒకే పేజీలో రెండు నిలువు వరుసల్లో చూపించు',
 );
 
-/** Tetum (Tetun)
+/** Tetum (tetun)
  * @author MF-Warburg
  */
 $messages['tet'] = array(
 	'doublewiki-desc' => "Hatudu pájina ida ho traudusaun husi wiki seluk iha pájina ida de'it",
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
+/** Tajik (Cyrillic script) (тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'doublewiki-desc' => 'Як саҳифа ва тарҷумаи онро аз як вики дигар дар ду сутун дар ҳамон саҳифа намоиш медиҳад',
 );
 
-/** Tajik (Latin script) (Tojikī)
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -641,21 +641,21 @@ $messages['tr'] = array(
 	'doublewiki-desc' => 'Bir sayfayı ve başka bir vikiden çevirisini, aynı sayfanın iki sütununda gösterir.',
 );
 
-/** Tatar (Cyrillic script) (Татарча)
+/** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
 	'doublewiki-desc' => 'Битне һәм аның башка викидагы тәрҗемәсен ике баганада күрсәтә',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Ahonc
  */
 $messages['uk'] = array(
 	'doublewiki-desc' => 'Показує сторінку та її переклад з іншої вікі у вигляді двох колонок',
 );
 
-/** Vèneto (Vèneto)
+/** vèneto (vèneto)
  * @author Candalua
  */
 $messages['vec'] = array(
@@ -690,14 +690,14 @@ $messages['yue'] = array(
 	'doublewiki-desc' => '響同一版度以兩欄同時顯示一版同埋佢響另一個wiki嘅翻譯',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
 	'doublewiki-desc' => '在同一页面中以两栏同时显示一页以及它在另一个wiki中的翻译',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (‪中文（繁體）‬)
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
