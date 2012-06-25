@@ -59,6 +59,7 @@ class DoubleWiki {
 		if ( $match_request === '' ) {
 			return true;
 		}
+		$out->setRobotPolicy( 'noindex,nofollow' );
 		$this->addMatchingTags ( $text, $match_request );
 
 		$langLinks = $out->getLanguageLinks();
