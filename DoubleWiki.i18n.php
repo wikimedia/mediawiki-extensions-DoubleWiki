@@ -33,7 +33,7 @@ $messages['aln'] = array(
 	'doublewiki-desc' => 'Tregon një faqe dhe të përkthimit të saj nga një tjetër wiki në dy kolona të njëjtën faqe',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -83,7 +83,7 @@ $messages['bcc'] = array(
 	'doublewiki-desc' => 'پیشداریت یک صفحه ای و آیی ترجمه یا چه یک دگه ویکیء ته دو ستون یک صفحه ای',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
@@ -153,7 +153,7 @@ $messages['diq'] = array(
 	'doublewiki-desc' => 'Wîkîyê bîn de yew pel u çarnayişê ey mucneno',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -216,7 +216,7 @@ $messages['frp'] = array(
 	'doublewiki-desc' => 'Montre una pâge et sa traduccion dês un ôtro vouiqui en doves colones sur la méma pâge.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Xosé
  */
 $messages['gl'] = array(
@@ -265,7 +265,7 @@ $messages['hr'] = array(
 	'doublewiki-desc' => 'Pokazuje stranicu i njen prijevod s drugog wikija u dva stupca na istoj stranici',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -515,7 +515,7 @@ $messages['ru'] = array(
 	'doublewiki-desc' => 'Показывает страницу и её перевод из другой вики в виде двух колонок',
 );
 
-/** Rusyn (Русиньскый)
+/** Rusyn (русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(
