@@ -62,7 +62,7 @@ $messages['ast'] = array(
 	'doublewiki-desc' => "Amuesa una páxina y la so traducción d'otra wiki en dos columnes na mesma páxina",
 );
 
-/** Bashkir (Башҡортса)
+/** Bashkir (башҡортса)
  * @author Assele
  */
 $messages['ba'] = array(
@@ -415,9 +415,7 @@ $messages['ms'] = array(
 	'doublewiki-desc' => 'Memaparkan sesebuah laman berserta terjemahannya daripada wiki lain pada dua lajur yang bersebelahan',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
+/** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'doublewiki-desc' => 'Viser en side og dens oversettelse fra en annen wiki side ved side',
 );
