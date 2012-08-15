@@ -415,6 +415,13 @@ $messages['ms'] = array(
 	'doublewiki-desc' => 'Memaparkan sesebuah laman berserta terjemahannya daripada wiki lain pada dua lajur yang bersebelahan',
 );
 
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'doublewiki-desc' => 'Turi paġna u t-traduzzjoni tagħha minn wiki oħra fuq żewġ kolonni fl-istess paġna',
+);
+
 /** Norwegian Bokmål (‪norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'doublewiki-desc' => 'Viser en side og dens oversettelse fra en annen wiki side ved side',
