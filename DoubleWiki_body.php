@@ -76,8 +76,8 @@ class DoubleWiki {
 				} else {
 					$url =  $nt->getCanonicalURL();
 					$myURL = $out->getTitle()->getLocalURL();
-					$languageName = $wgContLang->getLanguageName( $iw );
-					$myLanguage = $wgLang->getLanguageName( $wgContLang->getCode() );
+					$languageName = Language::getLanguageName( $iw );
+					$myLanguage = Language::getLanguageName( $wgContLang->getCode() );
 					$translation = Http::get( wfAppendQuery( $url, array( 'action' => 'render' ) ) );
 
 					if ( $translation !== null ) {
@@ -111,8 +111,9 @@ class DoubleWiki {
 								"<a href=\"/\\1?match={$match_request}\"", $text );
 
 						// do the job
-						$text = $this->matchColumns ( $text, $myLanguage, $myURL, $wgContLanguageCode,
-									   $translation, $languageName, $url, $match_request );
+						$match_request_lang = wfGetLangObj( $match_request );
+						$text = $this->matchColumns( $text, $myLanguage, $myURL, $wgContLang,
+									$translation, $languageName, $url, $match_request_lang );
 
 						$wgMemc->set( $key, $text, $wgDoubleWikiCacheTime );
 					}
@@ -124,6 +125,8 @@ class DoubleWiki {
 	}
 
 	/**
+	 * @param $left_lang Language
+	 * @param $right_lang Language
 	 * Format the text as a two-column table with aligned paragraphs
 	 */
 	function matchColumns( $left_text, $left_title, $left_url, $left_lang,
@@ -181,11 +184,17 @@ class DoubleWiki {
 				$left_chunk  = '';
 				$right_chunk = '';
 				$leftBitCount = count( $left_bits );
+				$left_langcode = htmlspecialchars( $left_lang->getHtmlCode() );
+				$left_langdir = $left_lang->getDir();
+				$right_langcode = htmlspecialchars( $right_lang->getHtmlCode() );
+				$right_langdir = $right_lang->getDir();
 				for ( $l = 0; $l < $leftBitCount ; $l++ ) {
 					$body .=
-					  "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" lang=\"{$left_lang}\">"
+					  "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" "
+					  . "lang=\"{$left_langcode}\" dir=\"{$left_langdir}\" class=\"mw-content-{$left_langdir}\">"
 					  . "<div style=\"width:35em; margin:0px auto\">\n" . $left_bits[$l] . "</div>"
-					  . "</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" lang=\"{$right_lang}\">"
+					  . "</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" "
+					  . "lang=\"{$right_langcode}\" dir=\"{$right_langdir}\" class=\"mw-content-{$right_langdir}\">"
 					  . "<div style=\"width:35em; margin:0px auto\">\n" . $right_bits[$l] . "</div>"
 					  . "</td></tr>\n";
 				}
@@ -198,9 +207,9 @@ class DoubleWiki {
 		$head =
 		  "<table id=\"doubleWikiTable\" width=\"100%\" border=\"0\" bgcolor=\"white\" rules=\"cols\" cellpadding=\"0\">
 <colgroup><col width=\"50%\"/><col width=\"50%\"/></colgroup><thead>
-<tr><td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$left_lang}\">
+<tr><td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$left_langcode}\">
 <a href=\"{$left_url}\">{$left_title}</a></td>
-<td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$right_lang}\">
+<td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$right_langcode}\">
 <a href=\"{$right_url}\" class='extiw'>{$right_title}</a>
 </td></tr></thead>\n";
 		return $head . $body . "</table>" ;
