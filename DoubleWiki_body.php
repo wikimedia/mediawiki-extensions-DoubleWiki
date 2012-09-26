@@ -16,7 +16,6 @@
 # http://www.gnu.org/copyleft/gpl.html
 
 class DoubleWiki {
-
 	/**
 	 * Tags that must be closed. (list copied from Sanitizer.php)
 	 */
@@ -51,11 +50,12 @@ class DoubleWiki {
 	 * Transform $text into a bilingual version
 	 * @param $out OutputPage
 	 * @param $text
+	 * @return bool
 	 */
 	function addMatchedText( &$out, &$text ) {
-		global $wgContLang, $wgContLanguageCode, $wgRequest, $wgLang, $wgMemc, $wgDoubleWikiCacheTime;
+		global $wgContLang, $wgContLanguageCode, $wgMemc, $wgDoubleWikiCacheTime;
 
-		$match_request = $wgRequest->getText( 'match' );
+		$match_request = $out->getRequest()->getText( 'match' );
 		if ( $match_request === '' ) {
 			return true;
 		}
@@ -67,8 +67,7 @@ class DoubleWiki {
 			$iw = $nt->getInterwiki();
 
 			if ( $iw === $match_request ) {
-
-				$key = wfMemcKey( 'doublewiki', $wgLang->getCode(), $nt->getPrefixedDbKey() );
+				$key = wfMemcKey( 'doublewiki', $out->getLanguage()->getCode(), $nt->getPrefixedDbKey() );
 				$cachedText = $wgMemc->get( $key );
 
 				if( $cachedText ) {
@@ -76,8 +75,8 @@ class DoubleWiki {
 				} else {
 					$url =  $nt->getCanonicalURL();
 					$myURL = $out->getTitle()->getLocalURL();
-					$languageName = Language::getLanguageName( $iw );
-					$myLanguage = Language::getLanguageName( $wgContLang->getCode() );
+					$languageName = Language::fetchLanguageName( $iw );
+					$myLanguage = Language::fetchLanguageName( $wgContLang->getCode() );
 					$translation = Http::get( wfAppendQuery( $url, array( 'action' => 'render' ) ) );
 
 					if ( $translation !== null ) {
@@ -125,9 +124,16 @@ class DoubleWiki {
 	}
 
 	/**
+	 * @param $left_text
+	 * @param $left_title
+	 * @param $left_url
 	 * @param $left_lang Language
+	 * @param $right_text
+	 * @param $right_title
+	 * @param $right_url
 	 * @param $right_lang Language
 	 * Format the text as a two-column table with aligned paragraphs
+	 * @return string
 	 */
 	function matchColumns( $left_text, $left_title, $left_url, $left_lang,
 		$right_text, $right_title, $right_url, $right_lang ) {
@@ -249,7 +255,6 @@ class DoubleWiki {
 	 * Split text and return a set of html-balanced slices
 	 */
 	function find_slices( $left_text ) {
-
 		$tag_pattern = "/<span id=\"dw-[^\"]*\" title=\"([^\"]*)\"\/>/i";
 		$left_slices = preg_split( $tag_pattern, $left_text );
 		$left_tags = array();
@@ -308,5 +313,4 @@ class DoubleWiki {
 		}
 		return array( $left_slices, $left_tags );
 	}
-
 }

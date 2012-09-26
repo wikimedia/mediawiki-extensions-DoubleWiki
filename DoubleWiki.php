@@ -1,5 +1,4 @@
 <?php
-
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -21,9 +20,9 @@
 # The translation comes from another wiki 
 # that can be accessed through interlanguage links
 
-
-$wgExtensionMessagesFiles['DoubleWiki'] = dirname(__FILE__)  . '/DoubleWiki.i18n.php';
-$wgAutoloadClasses['DoubleWiki'] = dirname( __FILE__ ) . "/DoubleWiki_body.php";
+$dir = __DIR__;
+$wgExtensionMessagesFiles['DoubleWiki'] = $dir  . '/DoubleWiki.i18n.php';
+$wgAutoloadClasses['DoubleWiki'] =  $dir . "/DoubleWiki_body.php";
 $wgHooks['OutputPageBeforeHTML'][] = 'DoubleWiki::OutputPageBeforeHTML';
 // How long cached page output is stored in memcached
 $wgDoubleWikiCacheTime = 3600 * 12;
