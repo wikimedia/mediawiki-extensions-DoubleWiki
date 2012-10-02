@@ -83,7 +83,7 @@ $messages['bcc'] = array(
 	'doublewiki-desc' => 'پیشداریت یک صفحه ای و آیی ترجمه یا چه یک دگه ویکیء ته دو ستون یک صفحه ای',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
@@ -422,7 +422,7 @@ $messages['mt'] = array(
 	'doublewiki-desc' => 'Turi paġna u t-traduzzjoni tagħha minn wiki oħra fuq żewġ kolonni fl-istess paġna',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk (bokmål)‎) */
 $messages['nb'] = array(
 	'doublewiki-desc' => 'Viser en side og dens oversettelse fra en annen wiki side ved side',
 );
@@ -441,7 +441,7 @@ $messages['nl'] = array(
 	'doublewiki-desc' => 'Presenteert een pagina en de vertaling uit een andere wiki in twee kolommen op dezelfde pagina',
 );
 
-/** Norwegian Nynorsk (‪norsk (nynorsk)‬)
+/** Norwegian Nynorsk (norsk (nynorsk)‎)
  * @author Harald Khan
  * @author Njardarlogar
  */
@@ -555,14 +555,14 @@ $messages['sq'] = array(
 	'doublewiki-desc' => 'Paraqet një faqe dhe përkthimin nga një wiki tjetër në dy kolona në faqen e njejtë',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'doublewiki-desc' => 'Приказује страну и њен превод с другог викија у две колоне на истој страни.',
 );
 
-/** Serbian (Latin script) (‪srpski (latinica)‬)
+/** Serbian (Latin script) (srpski (latinica)‎)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -695,14 +695,14 @@ $messages['yue'] = array(
 	'doublewiki-desc' => '響同一版度以兩欄同時顯示一版同埋佢響另一個wiki嘅翻譯',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
 	'doublewiki-desc' => '在同一页面中以两栏同时显示一页以及它在另一个wiki中的翻译',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
