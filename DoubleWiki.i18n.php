@@ -422,7 +422,8 @@ $messages['mt'] = array(
 	'doublewiki-desc' => 'Turi paġna u t-traduzzjoni tagħha minn wiki oħra fuq żewġ kolonni fl-istess paġna',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎) */
+/** Norwegian Bokmål (norsk (bokmål)‎)
+ */
 $messages['nb'] = array(
 	'doublewiki-desc' => 'Viser en side og dens oversettelse fra en annen wiki side ved side',
 );
@@ -708,4 +709,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'doublewiki-desc' => '在同一頁面中以兩欄同時顯示一頁以及它在另一個wiki中的翻譯',
 );
-
