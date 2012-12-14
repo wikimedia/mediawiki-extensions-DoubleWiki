@@ -59,7 +59,6 @@ class DoubleWiki {
 		if ( $match_request === '' ) {
 			return true;
 		}
-		$out->setRobotPolicy( 'noindex,nofollow' );
 		$this->addMatchingTags ( $text, $match_request );
 
 		$langLinks = $out->getLanguageLinks();
@@ -154,7 +153,7 @@ class DoubleWiki {
 			}
 
 			$found = false;
-			$tag = $left_tags[1][$i];
+			$tag = isset( $left_tags[1][$i] ) ? $left_tags[1][$i] : '';
 			$left_chunk .= $left_slices[$i];
 
 			// if we are at the end of the loop, finish quickly
@@ -313,5 +312,12 @@ class DoubleWiki {
 			}
 		}
 		return array( $left_slices, $left_tags );
+	}
+
+	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+		if ( $out->getRequest()->getText( 'match' ) !== '' ) {
+			$out->setRobotPolicy( 'noindex,nofollow' );
+		}
+		return true;
 	}
 }
