@@ -62,6 +62,13 @@ $messages['ast'] = array(
 	'doublewiki-desc' => "Amuesa una páxina y la so traducción d'otra wiki en dos columnes na mesma páxina",
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author Mousa
+ */
+$messages['azb'] = array(
+	'doublewiki-desc' => 'بیر صحیفه‌نی و اونون آیری ویکی‌دن بیر چئویرمه‌سینی، بیر صحیفه‌ده ایکی سوتون‌دا گؤسترر',
+);
+
 /** Bashkir (башҡортса)
  * @author Assele
  */
