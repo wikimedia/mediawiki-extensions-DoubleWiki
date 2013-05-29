@@ -223,6 +223,13 @@ $messages['frp'] = array(
 	'doublewiki-desc' => 'Montre una pâge et sa traduccion dês un ôtro vouiqui en doves colones sur la méma pâge.',
 );
 
+/** Northern Frisian (Nordfriisk)
+ * @author Murma174
+ */
+$messages['frr'] = array(
+	'doublewiki-desc' => 'Wiset en sid an hör auersaatang uun en ööder Wiki uun tau türner üüb det salew sidj uun.',
+);
+
 /** Galician (galego)
  * @author Xosé
  */
