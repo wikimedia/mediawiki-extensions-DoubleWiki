@@ -359,9 +359,10 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Kwj2772
+ * @author 아라
  */
 $messages['ko'] = array(
-	'doublewiki-desc' => '문서와 다른 위키의 번역본을 한 페이지의 두 단으로 보여 줌',
+	'doublewiki-desc' => '있는 문서와 다른 위키의 번역본을 두 단으로 같은 페이지에 보여줍니다',
 );
 
 /** Colognian (Ripoarisch)
