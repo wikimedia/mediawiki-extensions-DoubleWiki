@@ -497,7 +497,7 @@ $messages['pnb'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'doublewiki-desc' => 'د يوه بل ويکي نه د هماغه ويکي مخ او د هغه مخ ژباړه په يوه مخ کې د دوه کالمونو په توګه ښکاره کوي',
+	'doublewiki-desc' => 'د يوه بل ويکي نه د هماغه ويکي مخ او د هغه مخ ژباړه په يوه مخ کې د دوه کالمونو په توگه ښکاره کوي',
 );
 
 /** Portuguese (português)
