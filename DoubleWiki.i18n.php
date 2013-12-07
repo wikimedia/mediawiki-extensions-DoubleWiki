@@ -125,7 +125,7 @@ $messages['ca'] = array(
 	'doublewiki-desc' => "Mostra una pàgina i la seva traducció d'una altra wiki amb dues columnes a la mateixa pàgina",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Matěj Grabovský
  */
 $messages['cs'] = array(
