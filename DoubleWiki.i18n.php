@@ -550,6 +550,13 @@ $messages['sah'] = array(
 	'doublewiki-desc' => 'Сирэй атын тылынан торумун (тылбааһын) манна иккис колонкаҕа сэргэстэһиннэрэ көрдөрөр',
 );
 
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'doublewiki-desc' => 'Displeys ae page an its owerset fae anither wiki oan twa columns o the same page',
+);
+
 /** Slovak (slovenčina)
  * @author Helix84
  */
