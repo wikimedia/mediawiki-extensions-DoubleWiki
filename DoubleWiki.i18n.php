@@ -554,7 +554,7 @@ $messages['sah'] = array(
  * @author John Reid
  */
 $messages['sco'] = array(
-	'doublewiki-desc' => 'Displeys ae page an its owerset fae anither wiki oan twa columns o the same page',
+	'doublewiki-desc' => 'Displeys ae page n its owerset fae anither wiki oan twa columns o the same page',
 );
 
 /** Slovak (slovenčina)
