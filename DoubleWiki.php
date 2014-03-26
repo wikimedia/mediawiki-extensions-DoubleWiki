@@ -15,14 +15,14 @@
 # http://www.gnu.org/copyleft/gpl.html
 #
 #
-# This extension displays an article and its 
+# This extension displays an article and its
 # translation on two columns of the same page.
-# The translation comes from another wiki 
+# The translation comes from another wiki
 # that can be accessed through interlanguage links
 
-$dir = __DIR__;
-$wgExtensionMessagesFiles['DoubleWiki'] = $dir  . '/DoubleWiki.i18n.php';
-$wgAutoloadClasses['DoubleWiki'] =  $dir . "/DoubleWiki_body.php";
+$wgMessagesDirs['DoubleWiki'] = __DIR__ . '/i18n';
+$wgExtensionMessagesFiles['DoubleWiki'] = __DIR__  . '/DoubleWiki.i18n.php';
+$wgAutoloadClasses['DoubleWiki'] =  __DIR__ . "/DoubleWiki_body.php";
 $wgHooks['OutputPageBeforeHTML'][] = 'DoubleWiki::OutputPageBeforeHTML';
 $wgHooks['BeforePageDisplay'][] = 'DoubleWiki::onBeforePageDisplay';
 // How long cached page output is stored in memcached
