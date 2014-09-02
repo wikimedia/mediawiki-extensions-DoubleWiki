@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Shinjiman"
+			"Shinjiman",
+			"Cwlin0416"
 		]
 	},
-	"doublewiki-desc": "在同一頁面中以兩欄同時顯示一頁以及它在另一個wiki中的翻譯"
+	"doublewiki-desc": "在同一頁面中以兩欄同時顯示一頁以及它在另一個 Wiki 中的翻譯"
 }
