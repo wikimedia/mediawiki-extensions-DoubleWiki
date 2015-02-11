@@ -143,6 +143,8 @@ class DoubleWiki {
 		$body = '';
 		$left_chunk = '';
 		$right_chunk = '';
+		$left_langcode = '';
+		$right_langcode = '';
 
 		$leftSliceCount = count( $left_slices );
 		for ( $i = 0; $i < $leftSliceCount; $i++ ) {
