@@ -1,0 +1,26 @@
+{
+	"name": "DoubleWiki",
+	"author": "ThomasV",
+	"url": "https://www.mediawiki.org/wiki/Extension:DoubleWiki",
+	"descriptionmsg": "doublewiki-desc",
+	"type": "other",
+	"config": {
+		"DoubleWikiCacheTime": 43200
+	},
+	"Hooks": {
+		"OutputPageBeforeHTML": [
+			"DoubleWiki::OutputPageBeforeHTML"
+		],
+		"BeforePageDisplay": [
+			"DoubleWiki::onBeforePageDisplay"
+		]
+	},
+	"MessagesDirs": {
+		"DoubleWiki": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"DoubleWiki": "DoubleWiki_body.php"
+	}
+}

@@ -20,6 +20,11 @@
 # The translation comes from another wiki
 # that can be accessed through interlanguage links
 
+/**
+ * This PHP entry point is deprecated. Please use wfLoadExtension() and the extension.json file instead.
+ * See https://www.mediawiki.org/wiki/Manual:Extension_registration for more details.
+ */
+
 $wgMessagesDirs['DoubleWiki'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['DoubleWiki'] = __DIR__  . '/DoubleWiki.i18n.php';
 $wgAutoloadClasses['DoubleWiki'] =  __DIR__ . "/DoubleWiki_body.php";
