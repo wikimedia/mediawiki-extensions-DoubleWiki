@@ -22,5 +22,6 @@
 	},
 	"AutoloadClasses": {
 		"DoubleWiki": "DoubleWiki_body.php"
-	}
+	},
+	"manifest_version": 1
 }
