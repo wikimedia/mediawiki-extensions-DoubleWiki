@@ -1,41 +1,47 @@
 <?php
 
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ */
 
 class DoubleWiki {
 	/**
 	 * Tags that must be closed. (list copied from Sanitizer.php)
 	 */
+	// @codingStandardsIgnoreStart
 	public $tags = '/<\/?(b|del|i|ins|u|font|big|small|sub|sup|h1|h2|h3|h4|h5|h6|cite|code|em|s|strike|strong|tt|tr|td|var|div|center|blockquote|ol|ul|dl|table|caption|pre|ruby|rt|rb|rp|p|span)([\s](.*?)>|>)/i';
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Read the list of matched phrases and add tags to the html output.
 	 */
-	function addMatchingTags ( &$text, $lang ) {
-		$pattern = "/<div id=\"align-" . preg_quote( $lang, '/' ) . "\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
-		$m = array();
-		if ( ! preg_match( $pattern, $text, $m ) ) {
+	function addMatchingTags( &$text, $lang ) {
+		$pattern = "/<div id=\"align-" . preg_quote( $lang, '/' )
+			. "\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
+		$m = [];
+		if ( !preg_match( $pattern, $text, $m ) ) {
 			return;
 		}
 		$text = str_replace( $m[1], '', $text );
 		$line_pattern = '/\s*([^:\n]*?)\s*=\s*([^:\n]*?)\s*\n/i';
-		$items = array();
+		$items = [];
 		preg_match_all( $line_pattern, $m[1], $items, PREG_SET_ORDER );
 		foreach ( $items as $n => $i ) {
-			$text = str_replace( $i[1], "<span id=\"dw-" . preg_quote( $n, '/' ) . "\" title=\"{$i[2]}\"/>" . $i[1], $text );
+			$text = str_replace( $i[1], "<span id=\"dw-" . preg_quote( $n, '/' )
+				. "\" title=\"{$i[2]}\"/>" . $i[1], $text );
 		}
 	}
 
@@ -59,10 +65,10 @@ class DoubleWiki {
 		if ( $match_request === '' ) {
 			return true;
 		}
-		$this->addMatchingTags ( $text, $match_request );
+		$this->addMatchingTags( $text, $match_request );
 
 		$langLinks = $out->getLanguageLinks();
-		foreach( $langLinks as $l ) {
+		foreach ( $langLinks as $l ) {
 			$nt = Title::newFromText( $l );
 			$iw = $nt->getInterwiki();
 
@@ -70,14 +76,14 @@ class DoubleWiki {
 				$key = wfMemcKey( 'doublewiki', $out->getLanguage()->getCode(), $nt->getPrefixedDbKey() );
 				$cachedText = $wgMemc->get( $key );
 
-				if( $cachedText ) {
+				if ( $cachedText ) {
 					$text = $cachedText;
 				} else {
 					$url =  $nt->getCanonicalURL();
 					$myURL = $out->getTitle()->getLocalURL();
 					$languageName = Language::fetchLanguageName( $iw );
 					$myLanguage = Language::fetchLanguageName( $wgContLang->getCode() );
-					$translation = Http::get( wfAppendQuery( $url, array( 'action' => 'render' ) ) );
+					$translation = Http::get( wfAppendQuery( $url, [ 'action' => 'render' ] ) );
 
 					if ( $translation !== null ) {
 						/**
@@ -164,13 +170,13 @@ class DoubleWiki {
 				$found = true;
 			} else {
 				// look for requested tag in the text
-				$a = strpos ( $right_text, $tag );
+				$a = strpos( $right_text, $tag );
 				if ( $a ) {
 					$found = true;
 					$sub = substr( $right_text, 0, $a );
 					// detect the end of previous paragraph
 					// regexp matches the rightmost delimiter
-					$m = array();
+					$m = [];
 					if ( preg_match( "/(.*)<\/(p|dl)>/is", $sub, $m ) ) {
 						$right_chunk .= $m[0];
 						$right_text = substr( $right_text, strlen( $m[0] ) );
@@ -185,8 +191,8 @@ class DoubleWiki {
 
 				// Do not align paragraphs if counts are different
 				if ( count( $left_bits ) != count( $right_bits ) ) {
-					$left_bits = array( $left_chunk );
-					$right_bits = array( $right_chunk );
+					$left_bits = [ $left_chunk ];
+					$right_bits = [ $right_chunk ];
 				}
 
 				$left_chunk  = '';
@@ -196,13 +202,14 @@ class DoubleWiki {
 				$left_langdir = $left_lang->getDir();
 				$right_langcode = htmlspecialchars( $right_lang->getHtmlCode() );
 				$right_langdir = $right_lang->getDir();
-				for ( $l = 0; $l < $leftBitCount ; $l++ ) {
+				for ( $l = 0; $l < $leftBitCount; $l++ ) {
 					$body .=
 					  "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" "
 					  . "lang=\"{$left_langcode}\" dir=\"{$left_langdir}\" class=\"mw-content-{$left_langdir}\">"
 					  . "<div style=\"width:35em; margin:0px auto\">\n" . $left_bits[$l] . "</div>"
 					  . "</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" "
-					  . "lang=\"{$right_langcode}\" dir=\"{$right_langdir}\" class=\"mw-content-{$right_langdir}\">"
+					  . "lang=\"{$right_langcode}\" dir=\"{$right_langdir}\" "
+					  . "class=\"mw-content-{$right_langdir}\">"
 					  . "<div style=\"width:35em; margin:0px auto\">\n" . $right_bits[$l] . "</div>"
 					  . "</td></tr>\n";
 				}
@@ -212,24 +219,22 @@ class DoubleWiki {
 		// format table head and return results
 		$left_url = htmlspecialchars( $left_url );
 		$right_url = htmlspecialchars( $right_url );
-		$head =
-		  "<table id=\"doubleWikiTable\" width=\"100%\" border=\"0\" bgcolor=\"white\" rules=\"cols\" cellpadding=\"0\">
-<colgroup><col width=\"50%\"/><col width=\"50%\"/></colgroup><thead>
-<tr><td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$left_langcode}\">
-<a href=\"{$left_url}\">{$left_title}</a></td>
-<td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$right_langcode}\">
-<a href=\"{$right_url}\" class='extiw'>{$right_title}</a>
-</td></tr></thead>\n";
-		return $head . $body . "</table>" ;
+		$head = "<table id=\"doubleWikiTable\" width=\"100%\" border=\"0\" bgcolor=\"white\" "
+			. "rules=\"cols\" cellpadding=\"0\"><colgroup><col width=\"50%\"/><col width=\"50%\"/>"
+			. "</colgroup><thead><tr><td bgcolor=\"#cfcfff\" align=\"center\" "
+			. "lang=\"{$left_langcode}\"><a href=\"{$left_url}\">{$left_title}</a></td>"
+			. "<td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$right_langcode}\">"
+			. "<a href=\"{$right_url}\" class='extiw'>{$right_title}</a></td></tr></thead>\n";
+		return $head . $body . "</table>";
 	}
 
 	/**
 	 * Split text and return a set of html-balanced paragraphs
 	 */
 	function find_paragraphs( $text ) {
-		$result = array();
+		$result = [];
 		$bits = preg_split( $this->tags, $text );
-		$m = array();
+		$m = [];
 		preg_match_all( $this->tags, $text, $m, PREG_SET_ORDER );
 		$counter = 0;
 		$out = '';
@@ -259,7 +264,7 @@ class DoubleWiki {
 	function find_slices( $left_text ) {
 		$tag_pattern = "/<span id=\"dw-[^\"]*\" title=\"([^\"]*)\"\/>/i";
 		$left_slices = preg_split( $tag_pattern, $left_text );
-		$left_tags = array();
+		$left_tags = [];
 		preg_match_all( $tag_pattern, $left_text,  $left_tags, PREG_PATTERN_ORDER );
 		$n = count( $left_slices );
 
@@ -269,7 +274,7 @@ class DoubleWiki {
 		 */
 		for ( $i = 0; $i < $n - 1; $i++ ) {
 			$str = $left_slices[$i];
-			$m = array();
+			$m = [];
 			if ( preg_match( "/(.*)<(p|dl)>/is", $str, $m ) ) {
 				$left_slices[$i] = $m[1];
 				$left_slices[$i + 1] = substr( $str, strlen( $m[1] ) ) . $left_slices[$i + 1];
@@ -281,15 +286,15 @@ class DoubleWiki {
 		 * If a slice is unbalanced, we merge it with the next one.
 		 * The first and last slices are compensated.
 		 */
-		$stack = array();
+		$stack = [];
 		$opening = '';
 
 		for ( $i = 0; $i < $n; $i++ ) {
-			$m = array();
+			$m = [];
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER );
 			$counter = 0;
 			$matchCount = count( $m );
-			for ( $k = 0 ; $k < $matchCount ; $k++ ) {
+			for ( $k = 0; $k < $matchCount; $k++ ) {
 				$t = $m[$k];
 				if ( substr( $t[0], 0, 2 ) != "</" ) {
 					$counter++;
@@ -301,7 +306,7 @@ class DoubleWiki {
 			}
 			if ( $i == 0 ) {
 				$closure = '';
-				for ( $k = 0; $k < $counter ; $k++ ) {
+				for ( $k = 0; $k < $counter; $k++ ) {
 					$opening .= "<" . $stack[$k][1] . ">";
 					$closure = "</" . $stack[$k][1] . ">" . $closure;
 				}
@@ -313,7 +318,7 @@ class DoubleWiki {
 				$left_slices[$i] = '';
 			}
 		}
-		return array( $left_slices, $left_tags );
+		return [ $left_slices, $left_tags ];
 	}
 
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
