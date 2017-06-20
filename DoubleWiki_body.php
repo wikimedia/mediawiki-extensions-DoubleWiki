@@ -143,7 +143,6 @@ class DoubleWiki {
 	 */
 	function matchColumns( $left_text, $left_title, $left_url, $left_lang,
 		$right_text, $right_title, $right_url, $right_lang ) {
-
 		list( $left_slices, $left_tags ) = $this->find_slices( $left_text );
 
 		$body = '';
@@ -154,7 +153,6 @@ class DoubleWiki {
 
 		$leftSliceCount = count( $left_slices );
 		for ( $i = 0; $i < $leftSliceCount; $i++ ) {
-
 			// some slices might be empty
 			if ( $left_slices[$i] == '' ) {
 				continue;
