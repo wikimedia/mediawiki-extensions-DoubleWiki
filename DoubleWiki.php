@@ -28,7 +28,6 @@
  */
 
 $wgMessagesDirs['DoubleWiki'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['DoubleWiki'] = __DIR__  . '/DoubleWiki.i18n.php';
 $wgAutoloadClasses['DoubleWiki'] =  __DIR__ . "/DoubleWiki_body.php";
 $wgHooks['OutputPageBeforeHTML'][] = 'DoubleWiki::OutputPageBeforeHTML';
 $wgHooks['BeforePageDisplay'][] = 'DoubleWiki::onBeforePageDisplay';
