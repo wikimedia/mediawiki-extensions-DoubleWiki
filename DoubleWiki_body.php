@@ -79,7 +79,7 @@ class DoubleWiki {
 				if ( $cachedText ) {
 					$text = $cachedText;
 				} else {
-					$url =  $nt->getCanonicalURL();
+					$url = $nt->getCanonicalURL();
 					$myURL = $out->getTitle()->getLocalURL();
 					$languageName = Language::fetchLanguageName( $iw );
 					$myLanguage = Language::fetchLanguageName( $wgContLang->getCode() );
