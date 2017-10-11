@@ -27,6 +27,8 @@ class DoubleWiki {
 
 	/**
 	 * Read the list of matched phrases and add tags to the html output.
+	 * @param string &$text
+	 * @param string $lang
 	 */
 	function addMatchingTags( &$text, $lang ) {
 		$pattern = "/<div id=\"align-" . preg_quote( $lang, '/' )
@@ -54,8 +56,8 @@ class DoubleWiki {
 	/**
 	 * Hook function called with &match=lang
 	 * Transform $text into a bilingual version
-	 * @param $out OutputPage
-	 * @param $text
+	 * @param OutputPage &$out
+	 * @param string &$text
 	 * @return bool
 	 */
 	function addMatchedText( &$out, &$text ) {
@@ -130,14 +132,14 @@ class DoubleWiki {
 	}
 
 	/**
-	 * @param $left_text
-	 * @param $left_title
-	 * @param $left_url
-	 * @param $left_lang Language
-	 * @param $right_text
-	 * @param $right_title
-	 * @param $right_url
-	 * @param $right_lang Language
+	 * @param string $left_text
+	 * @param string $left_title
+	 * @param string $left_url
+	 * @param Language $left_lang
+	 * @param string $right_text
+	 * @param string $right_title
+	 * @param string $right_url
+	 * @param Language $right_lang
 	 * Format the text as a two-column table with aligned paragraphs
 	 * @return string
 	 */
@@ -228,6 +230,8 @@ class DoubleWiki {
 
 	/**
 	 * Split text and return a set of html-balanced paragraphs
+	 * @param string $text
+	 * @return array
 	 */
 	function find_paragraphs( $text ) {
 		$result = [];
@@ -258,6 +262,8 @@ class DoubleWiki {
 
 	/**
 	 * Split text and return a set of html-balanced slices
+	 * @param string $left_text
+	 * @return array
 	 */
 	function find_slices( $left_text ) {
 		$tag_pattern = "/<span id=\"dw-[^\"]*\" title=\"([^\"]*)\"\/>/i";
