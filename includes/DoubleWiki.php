@@ -30,7 +30,7 @@ class DoubleWiki {
 	 * @param string &$text
 	 * @param string $lang
 	 */
-	function addMatchingTags( &$text, $lang ) {
+	private function addMatchingTags( &$text, $lang ) {
 		$pattern = "/<div id=\"align-" . preg_quote( $lang, '/' )
 			. "\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
 		$m = [];
@@ -47,7 +47,15 @@ class DoubleWiki {
 		}
 	}
 
-	static function OutputPageBeforeHTML( &$out, &$text ) {
+	/**
+	 * OutputPageBeforeHTML hook handler
+	 * @link https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageBeforeHTML
+	 *
+	 * @param OutputPage &$out OutputPage object
+	 * @param string &$text HTML to mangle
+	 * @return bool
+	 */
+	public static function onOutputPageBeforeHTML( &$out, &$text ) {
 		$dw = new self();
 		$dw->addMatchedText( $out, $text );
 		return true;
@@ -60,7 +68,7 @@ class DoubleWiki {
 	 * @param string &$text
 	 * @return bool
 	 */
-	function addMatchedText( &$out, &$text ) {
+	private function addMatchedText( &$out, &$text ) {
 		global $wgContLang, $wgContLanguageCode, $wgMemc, $wgDoubleWikiCacheTime;
 
 		$match_request = $out->getRequest()->getText( 'match' );
@@ -143,9 +151,9 @@ class DoubleWiki {
 	 * Format the text as a two-column table with aligned paragraphs
 	 * @return string
 	 */
-	function matchColumns( $left_text, $left_title, $left_url, $left_lang,
+	private function matchColumns( $left_text, $left_title, $left_url, $left_lang,
 		$right_text, $right_title, $right_url, $right_lang ) {
-		list( $left_slices, $left_tags ) = $this->find_slices( $left_text );
+		list( $left_slices, $left_tags ) = $this->findSlices( $left_text );
 
 		$body = '';
 		$left_chunk = '';
@@ -186,8 +194,8 @@ class DoubleWiki {
 
 			if ( $found && $right_chunk ) {
 				// Detect paragraphs
-				$left_bits  = $this->find_paragraphs( $left_chunk );
-				$right_bits = $this->find_paragraphs( $right_chunk );
+				$left_bits = $this->findParagraphs( $left_chunk );
+				$right_bits = $this->findParagraphs( $right_chunk );
 
 				// Do not align paragraphs if counts are different
 				if ( count( $left_bits ) != count( $right_bits ) ) {
@@ -195,7 +203,7 @@ class DoubleWiki {
 					$right_bits = [ $right_chunk ];
 				}
 
-				$left_chunk  = '';
+				$left_chunk = '';
 				$right_chunk = '';
 				$leftBitCount = count( $left_bits );
 				$left_langcode = htmlspecialchars( $left_lang->getHtmlCode() );
@@ -204,14 +212,14 @@ class DoubleWiki {
 				$right_langdir = $right_lang->getDir();
 				for ( $l = 0; $l < $leftBitCount; $l++ ) {
 					$body .=
-					  "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" "
-					  . "lang=\"{$left_langcode}\" dir=\"{$left_langdir}\" class=\"mw-content-{$left_langdir}\">"
-					  . "<div style=\"width:35em; margin:0px auto\">\n" . $left_bits[$l] . "</div>"
-					  . "</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" "
-					  . "lang=\"{$right_langcode}\" dir=\"{$right_langdir}\" "
-					  . "class=\"mw-content-{$right_langdir}\">"
-					  . "<div style=\"width:35em; margin:0px auto\">\n" . $right_bits[$l] . "</div>"
-					  . "</td></tr>\n";
+					 "<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" "
+					 . "lang=\"{$left_langcode}\" dir=\"{$left_langdir}\" class=\"mw-content-{$left_langdir}\">"
+					 . "<div style=\"width:35em; margin:0px auto\">\n" . $left_bits[$l] . "</div>"
+					 . "</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" "
+					 . "lang=\"{$right_langcode}\" dir=\"{$right_langdir}\" "
+					 . "class=\"mw-content-{$right_langdir}\">"
+					 . "<div style=\"width:35em; margin:0px auto\">\n" . $right_bits[$l] . "</div>"
+					 . "</td></tr>\n";
 				}
 			}
 		}
@@ -233,7 +241,7 @@ class DoubleWiki {
 	 * @param string $text
 	 * @return array
 	 */
-	function find_paragraphs( $text ) {
+	private function findParagraphs( $text ) {
 		$result = [];
 		$bits = preg_split( $this->tags, $text );
 		$m = [];
@@ -265,11 +273,11 @@ class DoubleWiki {
 	 * @param string $left_text
 	 * @return array
 	 */
-	function find_slices( $left_text ) {
+	private function findSlices( $left_text ) {
 		$tag_pattern = "/<span id=\"dw-[^\"]*\" title=\"([^\"]*)\"\/>/i";
 		$left_slices = preg_split( $tag_pattern, $left_text );
 		$left_tags = [];
-		preg_match_all( $tag_pattern, $left_text,  $left_tags, PREG_PATTERN_ORDER );
+		preg_match_all( $tag_pattern, $left_text, $left_tags, PREG_PATTERN_ORDER );
 		$n = count( $left_slices );
 
 		/**
@@ -325,6 +333,14 @@ class DoubleWiki {
 		return [ $left_slices, $left_tags ];
 	}
 
+	/**
+	 * BeforePageDisplay hook handler
+	 * @link https://www.mediawiki.org/wiki/Manual:Hooks/BeforePageDisplay
+	 *
+	 * @param OutputPage &$out OutputPage object
+	 * @param Skin &$skin The skin in use
+	 * @return bool
+	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		if ( $out->getRequest()->getText( 'match' ) !== '' ) {
 			$out->setRobotPolicy( 'noindex,nofollow' );

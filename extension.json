@@ -10,7 +10,7 @@
 	},
 	"Hooks": {
 		"OutputPageBeforeHTML": [
-			"DoubleWiki::OutputPageBeforeHTML"
+			"DoubleWiki::onOutputPageBeforeHTML"
 		],
 		"BeforePageDisplay": [
 			"DoubleWiki::onBeforePageDisplay"
