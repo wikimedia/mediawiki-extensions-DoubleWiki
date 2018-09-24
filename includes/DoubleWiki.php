@@ -126,7 +126,7 @@ class DoubleWiki {
 								"<a href=\"/\\1?match={$match_request}\"", $text );
 
 						// do the job
-						$match_request_lang = wfGetLangObj( $match_request );
+						$match_request_lang = Language::factory( $match_request );
 						$text = $this->matchColumns( $text, $myLanguage, $myURL, $wgContLang,
 									$translation, $languageName, $url, $match_request_lang );
 
