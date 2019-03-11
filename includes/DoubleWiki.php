@@ -169,7 +169,7 @@ class DoubleWiki {
 			}
 
 			$found = false;
-			$tag = isset( $left_tags[1][$i] ) ? $left_tags[1][$i] : '';
+			$tag = $left_tags[1][$i] ?? '';
 			$left_chunk .= $left_slices[$i];
 
 			// if we are at the end of the loop, finish quickly
