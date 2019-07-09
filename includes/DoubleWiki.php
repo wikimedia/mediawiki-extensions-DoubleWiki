@@ -225,14 +225,14 @@ class DoubleWiki {
 		}
 
 		// format table head and return results
-		$left_url = htmlspecialchars( $left_url );
-		$right_url = htmlspecialchars( $right_url );
+		$leftUrlEscaped = htmlspecialchars( $left_url );
+		$rightUrlEscaped = htmlspecialchars( $right_url );
 		$head = "<table id=\"doubleWikiTable\" width=\"100%\" border=\"0\" bgcolor=\"white\" "
 			. "rules=\"cols\" cellpadding=\"0\"><colgroup><col width=\"50%\"/><col width=\"50%\"/>"
 			. "</colgroup><thead><tr><td bgcolor=\"#cfcfff\" align=\"center\" "
-			. "lang=\"{$left_langcode}\"><a href=\"{$left_url}\">{$left_title}</a></td>"
+			. "lang=\"{$left_langcode}\"><a href=\"{$leftUrlEscaped}\">{$left_title}</a></td>"
 			. "<td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$right_langcode}\">"
-			. "<a href=\"{$right_url}\" class='extiw'>{$right_title}</a></td></tr></thead>\n";
+			. "<a href=\"{$rightUrlEscaped}\" class='extiw'>{$right_title}</a></td></tr></thead>\n";
 		return $head . $body . "</table>";
 	}
 
