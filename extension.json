@@ -5,6 +5,9 @@
 	"url": "https://www.mediawiki.org/wiki/Extension:DoubleWiki",
 	"descriptionmsg": "doublewiki-desc",
 	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.32.0"
+	},
 	"config": {
 		"DoubleWikiCacheTime": 43200
 	},

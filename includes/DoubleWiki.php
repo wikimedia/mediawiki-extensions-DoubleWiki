@@ -17,6 +17,8 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
+use MediaWiki\MediaWikiServices;
+
 class DoubleWiki {
 	/**
 	 * Tags that must be closed. (list copied from Sanitizer.php)
@@ -69,7 +71,7 @@ class DoubleWiki {
 	 * @return bool
 	 */
 	private function addMatchedText( &$out, &$text ) {
-		global $wgContLang, $wgContLanguageCode, $wgMemc, $wgDoubleWikiCacheTime;
+		global $wgContLanguageCode, $wgMemc, $wgDoubleWikiCacheTime;
 
 		$match_request = $out->getRequest()->getText( 'match' );
 		if ( $match_request === '' ) {
@@ -78,6 +80,7 @@ class DoubleWiki {
 		$this->addMatchingTags( $text, $match_request );
 
 		$langLinks = $out->getLanguageLinks();
+		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
 		foreach ( $langLinks as $l ) {
 			$nt = Title::newFromText( $l );
 			$iw = $nt->getInterwiki();
@@ -92,7 +95,7 @@ class DoubleWiki {
 					$url = $nt->getCanonicalURL();
 					$myURL = $out->getTitle()->getLocalURL();
 					$languageName = Language::fetchLanguageName( $iw );
-					$myLanguage = Language::fetchLanguageName( $wgContLang->getCode() );
+					$myLanguage = Language::fetchLanguageName( $contLang->getCode() );
 					$translation = Http::get( wfAppendQuery( $url, [ 'action' => 'render' ] ) );
 
 					if ( $translation !== null ) {
@@ -127,8 +130,16 @@ class DoubleWiki {
 
 						// do the job
 						$match_request_lang = Language::factory( $match_request );
-						$text = $this->matchColumns( $text, $myLanguage, $myURL, $wgContLang,
-									$translation, $languageName, $url, $match_request_lang );
+						$text = $this->matchColumns(
+							$text,
+							$myLanguage,
+							$myURL,
+							$contLang,
+							$translation,
+							$languageName,
+							$url,
+							$match_request_lang
+						);
 
 						$wgMemc->set( $key, $text, $wgDoubleWikiCacheTime );
 					}
