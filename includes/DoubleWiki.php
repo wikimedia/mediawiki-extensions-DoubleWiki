@@ -314,7 +314,6 @@ class DoubleWiki {
 
 		for ( $i = 0; $i < $n; $i++ ) {
 			$m = [];
-			// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 			preg_match_all( $this->tags, $left_slices[$i], $m, PREG_SET_ORDER );
 			$counter = 0;
 			$matchCount = count( $m );
@@ -334,7 +333,6 @@ class DoubleWiki {
 					$opening .= "<" . $stack[$k][1] . ">";
 					$closure = "</" . $stack[$k][1] . ">" . $closure;
 				}
-				// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
 				$left_slices[$i] = $left_slices[$i] . $closure;
 			} elseif ( $i == $n - 1 ) {
 				$left_slices[$i] = $opening . $left_slices[$i];
