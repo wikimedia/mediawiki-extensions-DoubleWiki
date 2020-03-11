@@ -12,12 +12,8 @@
 		"DoubleWikiCacheTime": 43200
 	},
 	"Hooks": {
-		"OutputPageBeforeHTML": [
-			"DoubleWiki::onOutputPageBeforeHTML"
-		],
-		"BeforePageDisplay": [
-			"DoubleWiki::onBeforePageDisplay"
-		]
+		"OutputPageBeforeHTML": "DoubleWiki::onOutputPageBeforeHTML",
+		"BeforePageDisplay": "DoubleWiki::onBeforePageDisplay"
 	},
 	"MessagesDirs": {
 		"DoubleWiki": [
