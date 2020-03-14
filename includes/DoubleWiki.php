@@ -71,7 +71,7 @@ class DoubleWiki {
 	 * @return bool
 	 */
 	private function addMatchedText( &$out, &$text ) {
-		global $wgContLanguageCode, $wgMemc, $wgDoubleWikiCacheTime;
+		global $wgLanguageCode, $wgMemc, $wgDoubleWikiCacheTime;
 
 		$match_request = $out->getRequest()->getText( 'match' );
 		if ( $match_request === '' ) {
@@ -106,7 +106,7 @@ class DoubleWiki {
 						 */
 						$translation = preg_replace(
 							"/<a href=\"http:\/\/([^\"\?]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
-							"<a href=\"http://\\1?match={$wgContLanguageCode}\"\\2>", $translation );
+							"<a href=\"http://\\1?match={$wgLanguageCode}\"\\2>", $translation );
 						// now add class='extiw' to these links
 						$translation = preg_replace(
 							"/<a href=\"http:\/\/([^\"]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
