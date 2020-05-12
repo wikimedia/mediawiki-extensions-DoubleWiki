@@ -9,7 +9,9 @@
 		"MediaWiki": ">= 1.32.0"
 	},
 	"config": {
-		"DoubleWikiCacheTime": 43200
+		"DoubleWikiCacheTime": {
+			"value": 43200
+		}
 	},
 	"Hooks": {
 		"OutputPageBeforeHTML": "DoubleWiki::onOutputPageBeforeHTML",
@@ -23,5 +25,5 @@
 	"AutoloadClasses": {
 		"DoubleWiki": "includes/DoubleWiki.php"
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }
