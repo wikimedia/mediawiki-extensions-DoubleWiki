@@ -79,6 +79,8 @@ class DoubleWiki {
 		}
 
 		$this->addMatchingTags( $text, $matchCode );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$fname = __METHOD__;
 
 		foreach ( $out->getLanguageLinks() as $iwLinkText ) {
 			$iwt = Title::newFromText( $iwLinkText );
@@ -86,7 +88,6 @@ class DoubleWiki {
 				continue;
 			}
 
-			$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 			$newText = $cache->getWithSetCallback(
 				$cache->makeKey(
 					'doublewiki-bilingual-pagetext',
@@ -95,17 +96,18 @@ class DoubleWiki {
 				),
 				$wgDoubleWikiCacheTime,
 				// @TODO: maybe integrate with WikiPage::purgeInterwikiCheckKey() somehow?
-				function ( $oldValue ) use ( $iwt, $out, $matchCode, $text, $cache ) {
-					$contLang = MediaWikiServices::getInstance()->getContentLanguage();
+				function ( $oldValue ) use ( $iwt, $out, $matchCode, $text, $cache, $fname ) {
+					$services = MediaWikiServices::getInstance();
+					$contLang = $services->getContentLanguage();
 
 					$foreignUrl = $iwt->getCanonicalURL();
 					$currentUrl = $out->getTitle()->getLocalURL();
 					$foriegnLangName = Language::fetchLanguageName( $matchCode );
 					$contentLangName = Language::fetchLanguageName( $contLang->getCode() );
 
-					// TODO: Use MediaWikiServices::getHttpRequestFactory() instead
 					// TODO: Consider getting Last-Modified header and use $cache->daptiveTTL()
-					$translation = Http::get( wfAppendQuery( $foreignUrl, [ 'action' => 'render' ] ) );
+					$translation = $services->getHttpRequestFactory()
+						->get( wfAppendQuery( $foreignUrl, [ 'action' => 'render' ] ), [], $fname );
 
 					if ( $translation === null ) {
 						// not cached
