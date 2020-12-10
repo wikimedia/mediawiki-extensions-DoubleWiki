@@ -391,7 +391,7 @@ class DoubleWiki {
 					$opening .= "<" . $stack[$k][1] . ">";
 					$closure = "</" . $stack[$k][1] . ">" . $closure;
 				}
-				$left_slices[$i] = $left_slices[$i] . $closure;
+				$left_slices[$i] .= $closure;
 			} elseif ( $i == $n - 1 ) {
 				$left_slices[$i] = $opening . $left_slices[$i];
 			} elseif ( $counter != 0 ) {
