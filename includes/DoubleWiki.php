@@ -20,12 +20,13 @@
 use MediaWiki\MediaWikiServices;
 
 class DoubleWiki {
+	// phpcs:disable Generic.Files.LineLength
 	/**
 	 * Tags that must be closed. (list copied from Sanitizer.php)
+	 * @var string
 	 */
-	// @codingStandardsIgnoreStart
 	public $tags = '/<\/?(b|del|i|ins|u|font|big|small|sub|sup|h1|h2|h3|h4|h5|h6|cite|code|em|s|strike|strong|tt|tr|td|var|div|center|blockquote|ol|ul|dl|table|caption|pre|ruby|rt|rb|rp|p|span)([\s](.*?)>|>)/i';
-	// @codingStandardsIgnoreEnd
+	// phpcs:enable
 
 	/**
 	 * Read the list of matched phrases and add tags to the html output.
