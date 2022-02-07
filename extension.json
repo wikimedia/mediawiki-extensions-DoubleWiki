@@ -14,16 +14,16 @@
 		}
 	},
 	"Hooks": {
-		"OutputPageBeforeHTML": "DoubleWiki::onOutputPageBeforeHTML",
-		"BeforePageDisplay": "DoubleWiki::onBeforePageDisplay"
+		"OutputPageBeforeHTML": "MediaWiki\\Extension\\DoubleWiki\\DoubleWiki::onOutputPageBeforeHTML",
+		"BeforePageDisplay": "MediaWiki\\Extension\\DoubleWiki\\DoubleWiki::onBeforePageDisplay"
 	},
 	"MessagesDirs": {
 		"DoubleWiki": [
 			"i18n"
 		]
 	},
-	"AutoloadClasses": {
-		"DoubleWiki": "includes/DoubleWiki.php"
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\DoubleWiki\\": "includes/"
 	},
 	"manifest_version": 2
 }

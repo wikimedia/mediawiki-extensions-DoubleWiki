@@ -17,7 +17,13 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
+namespace MediaWiki\Extension\DoubleWiki;
+
+use Language;
 use MediaWiki\MediaWikiServices;
+use OutputPage;
+use Skin;
+use Title;
 
 class DoubleWiki {
 	// phpcs:disable Generic.Files.LineLength
@@ -103,7 +109,7 @@ class DoubleWiki {
 
 					$foreignUrl = $iwt->getCanonicalURL();
 					$currentUrl = $out->getTitle()->getLocalURL();
-					$foriegnLangName = Language::fetchLanguageName( $matchCode );
+					$foreignLangName = Language::fetchLanguageName( $matchCode );
 					$contentLangName = Language::fetchLanguageName( $contLang->getCode() );
 
 					// TODO: Consider getting Last-Modified header and use $cache->daptiveTTL()
@@ -127,7 +133,7 @@ class DoubleWiki {
 						$currentUrl,
 						$contLang,
 						$translation,
-						$foriegnLangName,
+						$foreignLangName,
 						$foreignUrl,
 						Language::factory( $matchCode )
 					);
@@ -407,11 +413,11 @@ class DoubleWiki {
 	 * BeforePageDisplay hook handler
 	 * @link https://www.mediawiki.org/wiki/Manual:Hooks/BeforePageDisplay
 	 *
-	 * @param OutputPage &$out OutputPage object
-	 * @param Skin &$skin The skin in use
+	 * @param OutputPage $out OutputPage object
+	 * @param Skin $skin The skin in use
 	 * @return bool
 	 */
-	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( $out->getRequest()->getText( 'match' ) !== '' ) {
 			$out->setRobotPolicy( 'noindex,nofollow' );
 		}
