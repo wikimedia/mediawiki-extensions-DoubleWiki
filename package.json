@@ -1,4 +1,5 @@
 {
+	"name": "DoubleWiki",
 	"private": true,
 	"scripts": {
 		"test": "grunt test"
