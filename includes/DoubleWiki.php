@@ -19,27 +19,52 @@
 
 namespace MediaWiki\Extension\DoubleWiki;
 
+use Config;
 use Language;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Hook\BeforePageDisplayHook;
+use MediaWiki\Hook\OutputPageBeforeHTMLHook;
+use MediaWiki\Http\HttpRequestFactory;
+use MediaWiki\Languages\LanguageFactory;
+use MediaWiki\Languages\LanguageNameUtils;
 use OutputPage;
 use Skin;
 use Title;
+use WANObjectCache;
 
-class DoubleWiki {
+class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 	// phpcs:disable Generic.Files.LineLength
-	/**
-	 * Tags that must be closed. (list copied from Sanitizer.php)
-	 * @var string
-	 */
-	public $tags = '/<\/?(b|del|i|ins|u|font|big|small|sub|sup|h1|h2|h3|h4|h5|h6|cite|code|em|s|strike|strong|tt|tr|td|var|div|center|blockquote|ol|ul|dl|table|caption|pre|ruby|rt|rb|rp|p|span)([\s](.*?)>|>)/i';
+	/** Tags that must be closed. (list copied from Sanitizer.php) */
+	public string $tags = '/<\/?(b|del|i|ins|u|font|big|small|sub|sup|h1|h2|h3|h4|h5|h6|cite|code|em|s|strike|strong|tt|tr|td|var|div|center|blockquote|ol|ul|dl|table|caption|pre|ruby|rt|rb|rp|p|span)([\s](.*?)>|>)/i';
 	// phpcs:enable
+
+	private Config $mainConfig;
+	private Language $contentLanguage;
+	private LanguageFactory $languageFactory;
+	private LanguageNameUtils $languageNameUtils;
+	private HttpRequestFactory $httpRequestFactory;
+	private WANObjectCache $cache;
+
+	/** Constructor. */
+	public function __construct(
+		Config $mainConfig,
+		Language $contentLanguage,
+		LanguageFactory $languageFactory,
+		LanguageNameUtils $languageNameUtils,
+		HttpRequestFactory $httpRequestFactory,
+		WANObjectCache $cache
+	) {
+		$this->mainConfig = $mainConfig;
+		$this->contentLanguage = $contentLanguage;
+		$this->languageFactory = $languageFactory;
+		$this->languageNameUtils = $languageNameUtils;
+		$this->httpRequestFactory = $httpRequestFactory;
+		$this->cache = $cache;
+	}
 
 	/**
 	 * Read the list of matched phrases and add tags to the html output.
-	 * @param string &$text
-	 * @param string $lang
 	 */
-	private function addMatchingTags( &$text, $lang ) {
+	private function addMatchingTags( string &$text, string $lang ): void {
 		$pattern = "/<div id=\"align-" . preg_quote( $lang, '/' )
 			. "\" style=\"display:none;\">\n*<pre>(.*?)<\/pre>\n*<\/div>/is";
 		$m = [];
@@ -57,36 +82,20 @@ class DoubleWiki {
 	}
 
 	/**
-	 * OutputPageBeforeHTML hook handler
+	 * OutputPageBeforeHTML hook handler. Transform $text into
+	 * a bilingual version if `match` query parameter is provided.
 	 * @link https://www.mediawiki.org/wiki/Manual:Hooks/OutputPageBeforeHTML
 	 *
-	 * @param OutputPage &$out OutputPage object
+	 * @param OutputPage $out OutputPage object
 	 * @param string &$text HTML to mangle
-	 * @return bool
 	 */
-	public static function onOutputPageBeforeHTML( &$out, &$text ) {
-		$dw = new self();
-		$dw->addMatchedText( $out, $text );
-		return true;
-	}
-
-	/**
-	 * Hook function called with &match=lang
-	 * Transform $text into a bilingual version
-	 * @param OutputPage &$out
-	 * @param string &$text
-	 * @return bool
-	 */
-	private function addMatchedText( &$out, &$text ) {
-		global $wgDoubleWikiCacheTime;
-
+	public function onOutputPageBeforeHTML( $out, &$text ): bool {
 		$matchCode = $out->getRequest()->getText( 'match' );
 		if ( $matchCode === '' ) {
 			return true;
 		}
 
 		$this->addMatchingTags( $text, $matchCode );
-		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 		$fname = __METHOD__;
 
 		foreach ( $out->getLanguageLinks() as $iwLinkText ) {
@@ -95,25 +104,20 @@ class DoubleWiki {
 				continue;
 			}
 
-			$newText = $cache->getWithSetCallback(
-				$cache->makeKey(
+			$newText = $this->cache->getWithSetCallback(
+				$this->cache->makeKey(
 					'doublewiki-bilingual-pagetext',
 					$out->getLanguage()->getCode(),
 					$iwt->getPrefixedDbKey()
 				),
-				$wgDoubleWikiCacheTime,
+				$this->mainConfig->get( 'DoubleWikiCacheTime' ),
 				// @TODO: maybe integrate with WikiPage::purgeInterwikiCheckKey() somehow?
-				function ( $oldValue ) use ( $iwt, $out, $matchCode, $text, $cache, $fname ) {
-					$services = MediaWikiServices::getInstance();
-					$contLang = $services->getContentLanguage();
-
+				function ( $oldValue ) use ( $iwt, $out, $matchCode, $text, $fname ) {
 					$foreignUrl = $iwt->getCanonicalURL();
 					$currentUrl = $out->getTitle()->getLocalURL();
-					$foreignLangName = Language::fetchLanguageName( $matchCode );
-					$contentLangName = Language::fetchLanguageName( $contLang->getCode() );
 
 					// TODO: Consider getting Last-Modified header and use $cache->daptiveTTL()
-					$translation = $services->getHttpRequestFactory()
+					$translation = $this->httpRequestFactory
 						->get( wfAppendQuery( $foreignUrl, [ 'action' => 'render' ] ), [], $fname );
 
 					if ( $translation === null ) {
@@ -129,13 +133,11 @@ class DoubleWiki {
 
 					return $this->matchColumns(
 						$text,
-						$contentLangName,
 						$currentUrl,
-						$contLang,
+						$this->contentLanguage,
 						$translation,
-						$foreignLangName,
 						$foreignUrl,
-						Language::factory( $matchCode )
+						$this->languageFactory->getLanguage( $matchCode )
 					);
 				}
 			);
@@ -151,14 +153,9 @@ class DoubleWiki {
 	}
 
 	/**
-	 * @param string $text
-	 * @param string $translation
-	 * @param string $matchLangCode
 	 * @return string[] (new text, new translation)
 	 */
-	private function getMangledTextAndTranslation( $text, $translation, $matchLangCode ) {
-		global $wgLanguageCode;
-
+	private function getMangledTextAndTranslation( string $text, string $translation, string $matchLangCode ): array {
 		/**
 		 * first find all links that have no 'class' parameter.
 		 * these links are local so we add '?match=xx' to their url,
@@ -166,7 +163,7 @@ class DoubleWiki {
 		 */
 		$translation = preg_replace(
 			"/<a href=\"http:\/\/([^\"\?]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
-			"<a href=\"http://\\1?match={$wgLanguageCode}\"\\2>",
+			"<a href=\"http://\\1?match={$this->contentLanguage->getCode()}\"\\2>",
 			$translation
 		);
 		// now add class='extiw' to these links
@@ -216,19 +213,12 @@ class DoubleWiki {
 	}
 
 	/**
-	 * @param string $left_text
-	 * @param string $left_title
-	 * @param string $left_url
-	 * @param Language $left_lang
-	 * @param string $right_text
-	 * @param string $right_title
-	 * @param string $right_url
-	 * @param Language $right_lang
 	 * Format the text as a two-column table with aligned paragraphs
-	 * @return string
 	 */
-	private function matchColumns( $left_text, $left_title, $left_url, $left_lang,
-		$right_text, $right_title, $right_url, $right_lang ) {
+	private function matchColumns(
+		string $left_text, string $left_url, Language $left_lang,
+		string $right_text, string $right_url, Language $right_lang
+	): string {
 		list( $left_slices, $left_tags ) = $this->findSlices( $left_text );
 
 		$body = '';
@@ -303,6 +293,8 @@ class DoubleWiki {
 		// format table head and return results
 		$leftUrlEscaped = htmlspecialchars( $left_url );
 		$rightUrlEscaped = htmlspecialchars( $right_url );
+		$left_title = $this->languageNameUtils->getLanguageName( $left_lang->getCode() );
+		$right_title = $this->languageNameUtils->getLanguageName( $right_lang->getCode() );
 		$head = "<table id=\"doubleWikiTable\" width=\"100%\" border=\"0\" bgcolor=\"white\" "
 			. "rules=\"cols\" cellpadding=\"0\"><colgroup><col width=\"50%\"/><col width=\"50%\"/>"
 			. "</colgroup><thead><tr><td bgcolor=\"#cfcfff\" align=\"center\" "
@@ -314,10 +306,9 @@ class DoubleWiki {
 
 	/**
 	 * Split text and return a set of html-balanced paragraphs
-	 * @param string $text
-	 * @return array
+	 * @return string[]
 	 */
-	private function findParagraphs( $text ) {
+	private function findParagraphs( string $text ): array {
 		$result = [];
 		$bits = preg_split( $this->tags, $text );
 		$m = [];
@@ -346,10 +337,9 @@ class DoubleWiki {
 
 	/**
 	 * Split text and return a set of html-balanced slices
-	 * @param string $left_text
-	 * @return array
+	 * @return array[] (slices, tags)
 	 */
-	private function findSlices( $left_text ) {
+	private function findSlices( string $left_text ): array {
 		$tag_pattern = "/<span id=\"dw-[^\"]*\" title=\"([^\"]*)\"\/>/i";
 		$left_slices = preg_split( $tag_pattern, $left_text );
 		$left_tags = [];
@@ -415,12 +405,10 @@ class DoubleWiki {
 	 *
 	 * @param OutputPage $out OutputPage object
 	 * @param Skin $skin The skin in use
-	 * @return bool
 	 */
-	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+	public function onBeforePageDisplay( $out, $skin ): void {
 		if ( $out->getRequest()->getText( 'match' ) !== '' ) {
 			$out->setRobotPolicy( 'noindex,nofollow' );
 		}
-		return true;
 	}
 }
