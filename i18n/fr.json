@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Meithal"
+			"Meithal",
+			"Verdy p"
 		]
 	},
-	"doublewiki-desc": "Affiche une page et sa traduction depuis un autre wiki en deux colonnes sur la même page"
+	"doublewiki-desc": "Affiche une page et sa traduction depuis un autre wiki en deux colonnes sur la même page."
 }
