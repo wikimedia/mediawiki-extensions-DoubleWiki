@@ -6,7 +6,7 @@
 	"descriptionmsg": "doublewiki-desc",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.34.0"
+		"MediaWiki": ">= 1.35.0"
 	},
 	"config": {
 		"DoubleWikiCacheTime": {
@@ -14,8 +14,21 @@
 		}
 	},
 	"Hooks": {
-		"OutputPageBeforeHTML": "MediaWiki\\Extension\\DoubleWiki\\DoubleWiki::onOutputPageBeforeHTML",
-		"BeforePageDisplay": "MediaWiki\\Extension\\DoubleWiki\\DoubleWiki::onBeforePageDisplay"
+		"OutputPageBeforeHTML": "main",
+		"BeforePageDisplay": "main"
+	},
+	"HookHandlers": {
+		"main": {
+			"class": "MediaWiki\\Extension\\DoubleWiki\\DoubleWiki",
+			"services": [
+				"MainConfig",
+				"ContentLanguage",
+				"LanguageFactory",
+				"LanguageNameUtils",
+				"HttpRequestFactory",
+				"MainWANObjectCache"
+			]
+		}
 	},
 	"MessagesDirs": {
 		"DoubleWiki": [
