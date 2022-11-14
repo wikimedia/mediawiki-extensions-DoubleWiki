@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dbc334"
+			"Dbc334",
+			"Eleassar"
 		]
 	},
-	"doublewiki-desc": "Prikaže stran in njen prevod iz drugega wikija v dveh stolpcih na isti strani"
+	"doublewiki-desc": "Prikaže stran in njen prevod iz drugega vikija v dveh stolpcih na isti strani"
 }
