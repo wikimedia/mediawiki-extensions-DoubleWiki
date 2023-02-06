@@ -100,7 +100,7 @@ class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 
 		foreach ( $out->getLanguageLinks() as $iwLinkText ) {
 			$iwt = Title::newFromText( $iwLinkText );
-			if ( $iwt->getInterwiki() !== $matchCode ) {
+			if ( !$iwt || $iwt->getInterwiki() !== $matchCode ) {
 				continue;
 			}
 
