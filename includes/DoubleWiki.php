@@ -24,6 +24,7 @@ use Language;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\OutputPageBeforeHTMLHook;
 use MediaWiki\Html\Html;
+use MediaWiki\Html\HtmlHelper;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Languages\LanguageFactory;
 use MediaWiki\Languages\LanguageNameUtils;
@@ -31,6 +32,7 @@ use OutputPage;
 use Skin;
 use Title;
 use WANObjectCache;
+use Wikimedia\RemexHtml\Serializer\SerializerNode;
 
 class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 
@@ -134,33 +136,60 @@ class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 	 */
 	private function getMangledTextAndTranslation( string $text, string $translation, string $matchLangCode ): array {
 		// add prefixes to internal links, in order to prevent duplicates
-		$translation = preg_replace(
-			"/<a href=\"#(.*?)\"/i",
-			"<a href=\"#l_\\1\"",
-			$translation
+		$translation = HtmlHelper::modifyElements(
+			$translation,
+			static function ( SerializerNode $n ): bool {
+				return $n->name === 'a' && isset( $n->attrs['href'] ) && str_starts_with( $n->attrs['href'], '#' );
+			},
+			static function ( SerializerNode $n ): SerializerNode {
+				$n->attrs['href'] = '#l_' . substr( $n->attrs['href'], 1 );
+				return $n;
+			}
 		);
-		$translation = preg_replace(
-			"/<li id=\"(.*?)\"/i",
-			"<li id=\"l_\\1\"",
-			$translation
+		$translation = HtmlHelper::modifyElements(
+			$translation,
+			static function ( SerializerNode $n ): bool {
+				return $n->name === 'li' && isset( $n->attrs['id'] );
+			},
+			static function ( SerializerNode $n ): SerializerNode {
+				$n->attrs['id'] = 'l_' . $n->attrs['id'];
+				return $n;
+			}
 		);
 
-		$text = preg_replace(
-			"/<a href=\"#(.*?)\"/i",
-			"<a href=\"#r_\\1\"",
-			$text
+		$text = HtmlHelper::modifyElements(
+			$text,
+			static function ( SerializerNode $n ): bool {
+				return $n->name === 'a' && isset( $n->attrs['href'] ) && str_starts_with( $n->attrs['href'], '#' );
+			},
+			static function ( SerializerNode $n ): SerializerNode {
+				$n->attrs['href'] = '#r_' . substr( $n->attrs['href'], 1 );
+				return $n;
+			}
 		);
-		$text = preg_replace(
-			"/<li id=\"(.*?)\"/i",
-			"<li id=\"r_\\1\"",
-			$text
+		$text = HtmlHelper::modifyElements(
+			$text,
+			static function ( SerializerNode $n ): bool {
+				return $n->name === 'li' && isset( $n->attrs['id'] );
+			},
+			static function ( SerializerNode $n ): SerializerNode {
+				$n->attrs['id'] = 'r_' . $n->attrs['id'];
+				return $n;
+			}
 		);
 
 		// add ?match= to local links of the local wiki
-		$text = preg_replace(
-			"/<a href=\"\/([^\"\?]*)\"/i",
-			"<a href=\"/\\1?match={$matchLangCode}\"",
-			$text
+		$text = HtmlHelper::modifyElements(
+			$text,
+			static function ( SerializerNode $n ): bool {
+				return $n->name === 'a' && isset( $n->attrs['href'] )
+					&& str_starts_with( $n->attrs['href'], '/' )
+					&& !str_contains( $n->attrs['href'], '?' );
+			},
+			static function ( SerializerNode $n ) use ( $matchLangCode ): SerializerNode {
+				$n->attrs['href'] = wfAppendQuery( $n->attrs['href'], [ 'match' => $matchLangCode ] );
+				return $n;
+			}
 		);
 
 		return [ $text, $translation ];
