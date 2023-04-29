@@ -1,0 +1,27 @@
+/* stylelint-disable no-descending-specificity, selector-max-id, color-named */
+
+#doubleWikiTable {
+	width: 100%;
+	background-color: white;
+	table-layout: fixed;
+	border: 0;
+	border-collapse: collapse;
+}
+
+#doubleWikiTable td:first-child {
+	border-right: 1px solid grey;
+}
+
+#doubleWikiTable thead td {
+	background-color: #cfcfff;
+	text-align: center;
+}
+
+#doubleWikiTable tbody td {
+	vertical-align: top;
+}
+
+#doubleWikiTable tbody td > div {
+	width: 35em;
+	margin: 0 auto;
+}

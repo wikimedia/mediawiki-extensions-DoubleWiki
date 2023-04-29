@@ -23,6 +23,7 @@ use Config;
 use Language;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\OutputPageBeforeHTMLHook;
+use MediaWiki\Html\Html;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Languages\LanguageFactory;
 use MediaWiki\Languages\LanguageNameUtils;
@@ -119,6 +120,7 @@ class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 
 			if ( $newText !== false ) {
 				$text = $newText;
+				$out->addModuleStyles( 'ext.doubleWiki' );
 			}
 
 			break;
@@ -175,29 +177,39 @@ class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 		$left_langdir = $left_lang->getDir();
 		$right_langcode = htmlspecialchars( $right_lang->getHtmlCode() );
 		$right_langdir = $right_lang->getDir();
-
-		$body =
-			"<tr><td valign=\"top\" style=\"vertical-align:100%;padding-right: 0.5em\" "
-			. "lang=\"{$left_langcode}\" dir=\"{$left_langdir}\" class=\"mw-content-{$left_langdir}\">"
-			. "<div style=\"width:35em; margin:0px auto\">\n" . $left_text . "</div>"
-			. "</td>\n<td valign=\"top\" style=\"padding-left: 0.5em\" "
-			. "lang=\"{$right_langcode}\" dir=\"{$right_langdir}\" "
-			. "class=\"mw-content-{$right_langdir}\">"
-			. "<div style=\"width:35em; margin:0px auto\">\n" . $right_text . "</div>"
-			. "</td></tr>\n";
-
-		// format table head and return results
-		$leftUrlEscaped = htmlspecialchars( $left_url );
-		$rightUrlEscaped = htmlspecialchars( $right_url );
 		$left_title = $this->languageNameUtils->getLanguageName( $left_lang->getCode() );
 		$right_title = $this->languageNameUtils->getLanguageName( $right_lang->getCode() );
-		$head = "<table id=\"doubleWikiTable\" width=\"100%\" border=\"0\" bgcolor=\"white\" "
-			. "rules=\"cols\" cellpadding=\"0\"><colgroup><col width=\"50%\"/><col width=\"50%\"/>"
-			. "</colgroup><thead><tr><td bgcolor=\"#cfcfff\" align=\"center\" "
-			. "lang=\"{$left_langcode}\"><a href=\"{$leftUrlEscaped}\">{$left_title}</a></td>"
-			. "<td bgcolor=\"#cfcfff\" align=\"center\" lang=\"{$right_langcode}\">"
-			. "<a href=\"{$rightUrlEscaped}\" class='extiw'>{$right_title}</a></td></tr></thead>\n";
-		return $head . $body . "</table>";
+
+		return Html::rawElement( 'table', [ 'id' => 'doubleWikiTable' ],
+			Html::rawElement( 'thead', [],
+				Html::rawElement( 'tr', [],
+					Html::rawElement( 'td', [ 'lang' => $left_langcode ],
+						Html::element( 'a', [ 'href' => $left_url ],
+							$left_title
+						)
+					) .
+					Html::rawElement( 'td', [ 'lang' => $right_langcode ],
+						Html::element( 'a', [ 'href' => $right_url, 'class' => 'extiw' ],
+							$right_title
+						)
+					)
+				)
+			) .
+			Html::rawElement( 'tr', [],
+				// phpcs:ignore Generic.Files.LineLength.TooLong
+				Html::rawElement( 'td', [ 'lang' => $left_langcode, 'dir' => $left_langdir, 'class' => "mw-content-$left_langdir" ],
+					Html::rawElement( 'div', [],
+						$left_text
+					)
+				) .
+				// phpcs:ignore Generic.Files.LineLength.TooLong
+				Html::rawElement( 'td', [ 'lang' => $right_langcode, 'dir' => $right_langdir, 'class' => "mw-content-$right_langdir" ],
+					Html::rawElement( 'div', [],
+						$right_text
+					)
+				)
+			)
+		);
 	}
 
 	/**

@@ -35,6 +35,15 @@
 			"i18n"
 		]
 	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "modules",
+		"remoteExtPath": "DoubleWiki/modules"
+	},
+	"ResourceModules": {
+		"ext.doubleWiki": {
+			"styles": "doubleWiki.css"
+		}
+	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\DoubleWiki\\": "includes/"
 	},
