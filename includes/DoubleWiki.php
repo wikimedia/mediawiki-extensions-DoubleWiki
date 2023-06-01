@@ -156,29 +156,6 @@ class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 	 * @return string[] (new text, new translation)
 	 */
 	private function getMangledTextAndTranslation( string $text, string $translation, string $matchLangCode ): array {
-		/**
-		 * first find all links that have no 'class' parameter.
-		 * these links are local so we add '?match=xx' to their url,
-		 * unless it already contains a '?'
-		 */
-		$translation = preg_replace(
-			"/<a href=\"http:\/\/([^\"\?]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
-			"<a href=\"http://\\1?match={$this->contentLanguage->getCode()}\"\\2>",
-			$translation
-		);
-		// now add class='extiw' to these links
-		$translation = preg_replace(
-			"/<a href=\"http:\/\/([^\"]*)\"(([\s]+)(c(?!lass=)|[^c\>\s])([^\>\s]*))*\>/i",
-			"<a href=\"http://\\1\" class=\"extiw\"\\3>",
-			$translation
-		);
-		// use class='extiw' for images too
-		$translation = preg_replace(
-			"/<a href=\"http:\/\/([^\"]*)\"([^\>]*)class=\"image\"([^\>]*)\>/i",
-			"<a href=\"http://\\1\"\\2class=\"extiw\"\\3>",
-			$translation
-		);
-
 		// add prefixes to internal links, in order to prevent duplicates
 		$translation = preg_replace(
 			"/<a href=\"#(.*?)\"/i",
