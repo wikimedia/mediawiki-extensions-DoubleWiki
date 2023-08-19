@@ -28,9 +28,9 @@ use MediaWiki\Html\HtmlHelper;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Languages\LanguageFactory;
 use MediaWiki\Languages\LanguageNameUtils;
+use MediaWiki\Title\Title;
 use OutputPage;
 use Skin;
-use Title;
 use WANObjectCache;
 use Wikimedia\RemexHtml\Serializer\SerializerNode;
 
