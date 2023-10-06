@@ -202,9 +202,9 @@ class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 		string $left_text, string $left_url, Language $left_lang,
 		string $right_text, string $right_url, Language $right_lang
 	): string {
-		$left_langcode = htmlspecialchars( $left_lang->getHtmlCode() );
+		$left_langcode = $left_lang->getHtmlCode();
 		$left_langdir = $left_lang->getDir();
-		$right_langcode = htmlspecialchars( $right_lang->getHtmlCode() );
+		$right_langcode = $right_lang->getHtmlCode();
 		$right_langdir = $right_lang->getDir();
 		$left_title = $this->languageNameUtils->getLanguageName( $left_lang->getCode() );
 		$right_title = $this->languageNameUtils->getLanguageName( $right_lang->getCode() );
