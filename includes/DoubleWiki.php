@@ -103,7 +103,7 @@ class DoubleWiki implements OutputPageBeforeHTMLHook, BeforePageDisplayHook {
 						return false;
 					}
 
-					list( $text, $translation ) = $this->getMangledTextAndTranslation(
+					[ $text, $translation ] = $this->getMangledTextAndTranslation(
 						$text,
 						$translation,
 						$matchCode
